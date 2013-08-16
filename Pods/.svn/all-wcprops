@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods
+END
+Pods.xcconfig
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Pods.xcconfig
+END
+Pods-resources.sh
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Pods-resources.sh
+END
+Pods-acknowledgements.plist
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Pods-acknowledgements.plist
+END
+Pods-dummy.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Pods-dummy.m
+END
+Pods-prefix.pch
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Pods-prefix.pch
+END
+Manifest.lock
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Manifest.lock
+END
+Pods-environment.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Pods-environment.h
+END
+Pods-acknowledgements.markdown
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/built-demo-apps/!svn/ver/157/trunk/projects-on-the-go/ios/projects-on-the-go/Pods/Pods-acknowledgements.markdown
+END

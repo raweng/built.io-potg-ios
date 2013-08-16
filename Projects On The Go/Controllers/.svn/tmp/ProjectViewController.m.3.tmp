@@ -1,0 +1,102 @@
+//
+//  ProjectViewController.m
+//  Projects On The Go
+//
+//  Created by Samir Bhide on 17/06/13.
+//  Copyright (c) 2013 raweng. All rights reserved.
+//
+
+#import "ProjectViewController.h"
+#import "ViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
+#import "AppConstants.h"
+#import "CreateProjectViewController.h"
+
+@interface ProjectViewController ()<UITableViewDataSource, UIAlertViewDelegate, UITextFieldDelegate>
+
+@end
+
+@implementation ProjectViewController
+
+-(id)initWithStyle:(UITableViewStyle)style{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+        self.title = @"Projects";
+        self.enablePullToRefresh = YES;
+        self.fetchLimit = 10;
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    NSLog(@"viewDidLoad ProjectViewController");
+    [super viewDidLoad];
+    [self refresh];
+    [self.navigationController setNavigationBarHidden:NO];
+    NSLog(@"2---- %d",self.isAdmin);
+    if (self.isAdmin) {
+        UIBarButtonItem *addProject = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                   target:self
+                                                                                   action:@selector(addProject:)];
+        [self.navigationItem setRightBarButtonItem:addProject];
+    }
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"body_bg.png"]]];
+}
+
+- (void)addProject:(id)sender{
+    UIAlertView *projectNameAlert = [[UIAlertView alloc]initWithTitle:@"Enter Project Name"
+                                                              message:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                                    otherButtonTitles:@"OK", nil];
+    [projectNameAlert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [projectNameAlert setTag:1];
+    [projectNameAlert setDelegate:self];
+    [projectNameAlert show];
+}
+
+#pragma mark
+#pragma mark UIAlertViewDelegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            CreateProjectViewController *createProject = [[CreateProjectViewController alloc]init];
+            UINavigationController *createProjectNavigationController = [[UINavigationController alloc]initWithRootViewController:createProject];
+            [createProjectNavigationController.navigationBar setTintColor:[UIColor darkGrayColor]];
+            createProject.title = [alertView textFieldAtIndex:0].text;
+            [self presentViewController:createProjectNavigationController animated:YES completion:nil];
+        }
+    }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath builtObject:(BuiltObject *)builtObject{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    cell.imageView.image = [UIImage imageNamed:@"bullet_black"];
+    cell.textLabel.text = [builtObject objectForKey:@"name"];
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ViewController *viewController = [[ViewController alloc]init];
+    [viewController showInitialBugsViewWithProjectName:[self builtObjectAtIndexPath:indexPath]];
+    [[AppDelegate sharedAppDelegate].nc pushViewController:viewController animated:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

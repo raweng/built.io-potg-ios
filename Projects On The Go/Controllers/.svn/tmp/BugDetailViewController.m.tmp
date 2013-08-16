@@ -1,0 +1,197 @@
+//
+//  BugDetailViewController.m
+//  Projects On The Go
+//
+//  Created by Samir Bhide on 19/06/13.
+//  Copyright (c) 2013 raweng. All rights reserved.
+//
+
+#import "BugDetailViewController.h"
+#import "EditBugDetailsController.h"
+#import "BugCommentsCell.h"
+
+@interface BugDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UILabel *bugTitle;
+@property (nonatomic, strong) UILabel *createdByLabel;
+@property (nonatomic, strong) UILabel *bugDetailLabel;
+@property (nonatomic, strong) UILabel *bugDetailContentLabel;
+@property (nonatomic, strong) UILabel *attachmentLabel;
+@property (nonatomic, strong) UILabel *commentsLabel;
+@property (nonatomic, strong) UIView *dividerView;
+@property (nonatomic, strong) UITableView *commentsTableView;
+@property (nonatomic, strong) NSMutableArray *comments;
+@end
+
+@implementation BugDetailViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.comments = [NSMutableArray array];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStyleDone target:self action:@selector(editBugAction)];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"body_bg"]]];
+}
+
+- (void)loadData:(BuiltObject *)bObject{
+    [self prepareViews];
+    NSLog(@"loadData--------------");
+    self.bugTitle.text = [NSString stringWithFormat:@"    %@",[bObject objectForKey:@"name"]];
+//    self.createdByLabel.text = [NSString stringWithFormat:@"Created By : %@ %@",[bObject.owner objectForKey:@"first_name"],[bObject.owner objectForKey:@"last_name"]];
+    [self.bugDetailLabel setText:@"Bug Detail :"];
+    self.bugDetailContentLabel.text = [bObject objectForKey:@"description"];
+    CGFloat width = self.bugDetailContentLabel.frame.size.width;
+    CGSize size = [[bObject objectForKey:@"description"] sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+    [self.bugDetailContentLabel setFrame:CGRectMake(10, CGRectGetMaxY(self.bugDetailLabel.frame) + 10, width, size.height)];
+    
+    [self.attachmentLabel setText:@"Attachments :"];
+    [self.commentsLabel setText:@"Comments :"];
+    
+    BuiltQuery *query = [BuiltQuery queryWithClassUID:@"comment"];
+    [query whereKey:@"for_bug" containedIn:[NSArray arrayWithObjects:bObject.uid, nil]];
+    
+    [query exec:^(QueryResult *result) {
+        NSLog(@"SUCCESS %@",[result getResult]);
+        NSMutableArray *results = [NSMutableArray arrayWithArray:[result getResult]];
+        
+        [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            BuiltObject *object = (BuiltObject *)obj;
+            [self.comments addObject:object];
+            NSLog(@"BUILT OBJECTS %@",obj);
+        }];
+        NSLog(@"comments count %d",self.comments.count);
+        [self.commentsTableView reloadData];
+    } onError:^(NSError *error) {
+        NSLog(@"FAILURE %@",error.userInfo);
+    }];
+}
+
+- (void)prepareViews{
+    NSLog(@"prepareViews");
+    CGFloat xPOS = 0;
+    CGFloat yPOS = 0;
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
+    
+    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//    [self.scrollView setBackgroundColor:[UIColor redColor]];
+    self.bugTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, width, 30)];
+    [self.bugTitle setBackgroundColor:[UIColor grayColor]];
+    yPOS = CGRectGetMaxY(self.bugTitle.frame) + 10;
+    [self.bugTitle setText:@"Bug Title"];
+    
+    self.dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, yPOS - 8, width, 2)];
+    [self.dividerView setBackgroundColor:[UIColor grayColor]];
+//    [self.dividerView setFrame:CGRectMake(0, yPOS, width, 2)];
+    yPOS = CGRectGetMaxY(self.dividerView.frame) + 10;
+    
+    self.createdByLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, yPOS, width - 20, 15)];
+    [self.createdByLabel setText:@"Created By :"];
+    [self.createdByLabel setFont:[UIFont systemFontOfSize:13.0]];
+    [self.createdByLabel setTextColor:[UIColor darkGrayColor]];
+    
+    yPOS = CGRectGetMaxY(self.createdByLabel.frame) + 10;
+    
+    self.bugDetailLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, yPOS, width - 20, 20)];
+    [self.bugDetailLabel setText:@"Bug Detail :"];
+    [self.bugDetailLabel setBackgroundColor:[UIColor clearColor]];
+    yPOS = CGRectGetMaxY(self.bugDetailLabel.frame) + 10;
+    
+    self.bugDetailContentLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, yPOS, width - 20, 50)];
+    [self.bugDetailContentLabel setFont:[UIFont systemFontOfSize:13.0]];
+    [self.bugDetailContentLabel setTextColor:[UIColor darkGrayColor]];
+    [self.bugDetailContentLabel setBackgroundColor:[UIColor clearColor]];
+    self.bugDetailContentLabel.numberOfLines = 4;
+    self.bugDetailContentLabel.text = @"	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    yPOS = CGRectGetMaxY(self.bugDetailContentLabel.frame) + 10;
+    
+    self.attachmentLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, yPOS, width - 20, 20)];
+    [self.attachmentLabel setText:@"Attachments :"];
+    [self.attachmentLabel setBackgroundColor:[UIColor clearColor]];
+    yPOS = CGRectGetMaxY(self.attachmentLabel.frame) + 10;
+    
+    self.commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, yPOS + 40, width - 20, 20)];
+    [self.commentsLabel setText:@"Commments :"];
+    [self.commentsLabel setBackgroundColor:[UIColor clearColor]];
+    yPOS = CGRectGetMaxY(self.commentsLabel.frame) + 10;
+    
+    self.commentsTableView = [[UITableView alloc]initWithFrame:CGRectMake(10, yPOS + 10, width - 20, height - yPOS) style:UITableViewStylePlain];
+    [self.commentsTableView setBackgroundColor:[UIColor clearColor]];
+    self.commentsTableView.delegate = self;
+    self.commentsTableView.dataSource = self;
+    self.commentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    yPOS = CGRectGetMaxY(self.commentsTableView.frame) + 10;
+    
+    
+    
+    [self.scrollView addSubview:self.bugTitle];
+    [self.scrollView addSubview:self.dividerView];
+    [self.scrollView addSubview:self.createdByLabel];
+    [self.scrollView addSubview:self.bugDetailLabel];
+    [self.scrollView addSubview:self.bugDetailContentLabel];
+    [self.scrollView addSubview:self.attachmentLabel];
+    [self.scrollView addSubview:self.commentsLabel];
+    [self.scrollView addSubview:self.commentsTableView];
+    [self.scrollView setContentSize:CGSizeMake(width, yPOS + 30)];
+    [self.view addSubview:self.scrollView];
+}
+
+-(void)editBugAction{
+    EditBugDetailsController *editBugDetailsController = [[EditBugDetailsController alloc]initWithNibName:@"EditBugDetailsController" bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editBugDetailsController];
+    [navController.navigationBar setTintColor:[UIColor darkGrayColor]];
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark UITableViewDataSource
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    
+    BugCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[BugCommentsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    BuiltObject *object = [self.comments objectAtIndex:indexPath.row];
+    [cell loadCommentData:object];
+    
+//    NSLog(@"CONTENT %@",[object objectForKey:@"content"]);
+//    cell.textLabel.text = [object objectForKey:@"content"];
+//    cell.imageView.image = [UIImage imageNamed:@"bullet_black"];
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *content = [[self.comments objectAtIndex:indexPath.row] objectForKey:@"content"];
+    CGSize actualSize = [content sizeWithFont:[UIFont systemFontOfSize:13.0] constrainedToSize:CGSizeMake(300, CGFLOAT_MAX)lineBreakMode:NSLineBreakByWordWrapping];
+    CGFloat height = actualSize.height + 15;
+    return height;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.comments.count;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

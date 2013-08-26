@@ -122,6 +122,19 @@
  */
 @property (nonatomic, strong) NSString *uid;
 
+/**
+ @abstract the old password of the user
+ @discussion the old password of the user to be provided in case user wants to update his/her password. 
+ */
+@property (nonatomic, strong) NSString *oldPassword;
+
+
+/**
+ @abstract Custom properties to be set when updating BuiltUser's details, if any. 
+ @discussion Any custom properties can be set when updating details of BuiltUser.
+ */
+@property (nonatomic, strong) NSMutableDictionary *customProperties;
+
 
 #pragma mark
 #pragma mark Create user object
@@ -161,6 +174,24 @@
  */
 - (void)signUpOnSuccess:(void (^) (void))successBlock
                 onError:(void (^) (NSError *error))errorBlock;
+
+/**---------------------------------------------------------------------------------------
+ * @name Update User
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ @abstract Updates the existing user
+ @discussion Updates the existing user info.
+ @discussion User's tibbr and Google Auth data can updated by providing auth_data `NSDictionary` in params. Pass `nil` if there's no need to update auth data.
+ @discussion example: For updating tibbr auth data pass `NSDictionary` in following manner. `NSDictionary` *auth_data = @{@"tibbr": @{@"access_token": @"<tibbr_access_token>", @"host":@"<tibbr_host>"}};
+ @discussion For updating Google's auth data pass `NSDictionary` in following manner. `NSDictionary` *auth_data = @{@"google": @{@"access_token": @"<google_access_token>"}}
+ @discussion We can also update custom properties by `setCustomProperties` method on BuiltUser object, passing `NSDictionary` of fields to be updated.
+ @param auth Updates the user's auth data with data provided in `NSDictionary`
+ @param successBlock CallBack in case of success.
+ @param errorBlock CallBack in case of failure.
+ */
+- (void)updateUserWithAuthData:(NSDictionary *)auth onSuccess:(void (^) (void))successBlock onError:(void (^) (NSError *error))errorBlock;
 
 
 /**---------------------------------------------------------------------------------------
@@ -332,8 +363,8 @@
 #pragma mark User Session
 
 /** 
-    @abstract Saves User Session
-    @discussion Saves User Session.
+    @abstract Saves User Session to disk.
+    @discussion Saves User Session to disk.
  */
 - (void)saveSession;
 
@@ -345,18 +376,18 @@
 - (void)clearSession;
 
 /**
- @abstract Get user session
- @discussion Get user session
- @return Returns User Session
+ @abstract Gets user session
+ @discussion Gets user session stored on disk.
+ @return Returns saved BuiltUser Session stored on disk.
  */
-- (id)getSession;
++ (BuiltUser *)getSession;
 
 /**
-    @abstract Set Access Token of a Session
-    @discussion Set Access Token of a Session.
-    @param authtoken Access Token
+    @abstract Sets Current logged in `BuiltUser` object.
+    @discussion Sets the current user from `BuiltUser` object passed in params.
+    @param user `BuiltUser` object. Ideally object returned by `(BuiltUser *)getSession` method.
  */
-- (void)setSession:(NSString *)authtoken;
++(void)setCurrentUser:(BuiltUser *)user;
 
 
 
@@ -434,6 +465,11 @@
  @abstract oauth token from twitter used to log a user into your application
  */
 + (NSString *)getTwitterOAuthToken;
+
+/**
+@abstract oauth token secret from twitter used to log a user into your application
+*/
++ (NSString *)getTwitterOAuthTokenSecret;
 
 /**
  @abstract access token from facebook used to log a user into your application

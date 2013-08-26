@@ -12,9 +12,9 @@
 #import <BuiltIO/BuiltApplication.h>
 #import <BuiltIO/BuiltACL.h>
 #import <BuiltIO/BuiltAnalytics.h>
-#import <BuiltIO/BuiltCloud.h>
 #import <BuiltIO/BuiltDelta.h>
 #import <BuiltIO/BuiltErrorCodes.h>
+#import <BuiltIO/BuiltExtension.h>
 #import <BuiltIO/BuiltEvent.h>
 #import <BuiltIO/BuiltFile.h>
 #import <BuiltIO/BuiltInstallation.h>

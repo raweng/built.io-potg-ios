@@ -33,7 +33,7 @@
     // [Built initializeWithApiKey:@"APPLICATION_API_KEY" andUid:@"APPLICATION_UID"];
     // ----------------------------------------------------------------------------
     
-    [Built initializeWithApiKey:@"blt3b011c0e38ed1d82" andUid:@"potg"];
+    [Built initializeWithApiKey:@"api_key_here" andUid:@"app_uid_here"];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

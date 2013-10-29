@@ -235,6 +235,9 @@ enum PannelState {
         [tasksVC.view setBackgroundColor:[UIColor whiteColor]];
         self.leftSelectedIndexPath = indexpath;
         [tasksVC loadTasks:self.builtObject];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            tasksVC.edgesForExtendedLayout=UIRectEdgeNone;
+        }
         self.mainViewController = tasksVC;
         
         [self.navigationController pushViewController:self.mainViewController animated:NO];
@@ -261,6 +264,9 @@ enum PannelState {
         [bugsVC.view setBackgroundColor:[UIColor whiteColor]];
         self.leftSelectedIndexPath = indexpath;
         [bugsVC loadBugsListWithObject:self.builtObject];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            bugsVC.edgesForExtendedLayout=UIRectEdgeNone;
+        }
         self.mainViewController = bugsVC;
         
         [self.navigationController pushViewController:self.mainViewController animated:NO];
@@ -283,6 +289,9 @@ enum PannelState {
         milestoneVC.canDeleteMilestone = self.canDeleteMilestone;
         [milestoneVC loadMilestones:self.builtObject];
         milestoneVC.title = (NSString *)object;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            milestoneVC.edgesForExtendedLayout=UIRectEdgeNone;
+        }
         self.leftSelectedIndexPath = indexpath;
         self.mainViewController = milestoneVC;
         

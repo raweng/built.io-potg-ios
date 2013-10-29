@@ -33,7 +33,7 @@
     // [Built initializeWithApiKey:@"APPLICATION_API_KEY" andUid:@"APPLICATION_UID"];
     // ----------------------------------------------------------------------------
     
-    [Built initializeWithApiKey:@"api_key_here" andUid:@"app_uid_here"];
+    [Built initializeWithApiKey:@"blt3b011c0e38ed1d82" andUid:@"potg"];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -151,6 +151,9 @@
     project.isAdmin = isAdmin;
     self.nc = [[UINavigationController alloc]initWithRootViewController:project];
     [self.nc.navigationBar setTintColor:[UIColor darkGrayColor]];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        project.edgesForExtendedLayout=UIRectEdgeNone;
+    }
     [self.nc setNavigationBarHidden:YES];
     [self.window setRootViewController:self.nc];
 }

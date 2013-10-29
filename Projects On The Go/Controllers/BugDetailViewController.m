@@ -452,7 +452,7 @@ const CGFloat kScrollObjWidth	= 52.0;
         [query whereKey:@"for_bug" containedIn:[NSArray arrayWithObjects:bself.builtObject.uid, nil]];
         
         //fire query
-        [query exec:^(QueryResult *result) {
+        [query exec:^(QueryResult *result, ResponseType type) {
             NSMutableArray *results = [NSMutableArray arrayWithArray:[result getResult]];
             [self.comments removeAllObjects];
             [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -463,7 +463,7 @@ const CGFloat kScrollObjWidth	= 52.0;
             [bself.commentsTableView.pullToRefreshView stopAnimating];
             [self.commentsTableView reloadData];
             [self prepareViews];
-        } onError:^(NSError *error) {
+        } onError:^(NSError *error, ResponseType type) {
             [bself.commentsTableView.pullToRefreshView stopAnimating];
             [self prepareViews];
         }];

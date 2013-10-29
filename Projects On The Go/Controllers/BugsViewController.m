@@ -131,7 +131,7 @@
         [bugsQuery includeOwner];
         
         //fire the query
-        [bugsQuery exec:^(QueryResult *result) {
+        [bugsQuery exec:^(QueryResult *result, ResponseType type) {
             [bself.bugsList removeAllObjects];
             NSMutableArray *results = [result getResult];
             [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -146,7 +146,7 @@
             [bself.bugsTableView.pullToRefreshView stopAnimating];
             bself.bugsTableView.pullToRefreshView.lastUpdatedDate = [NSDate date];
             [MBProgressHUD hideHUDForView:bself.view animated:NO];
-        } onError:^(NSError *error) {
+        } onError:^(NSError *error, ResponseType type) {
             [bself.bugsTableView.pullToRefreshView stopAnimating];
             [MBProgressHUD hideHUDForView:bself.view animated:NO];
         }];

@@ -71,7 +71,7 @@
         [query whereKey:@"project" containedIn:[NSArray arrayWithObject:self.builtObject.uid]];
         
         //fire the query
-        [query exec:^(QueryResult *result) {
+        [query exec:^(QueryResult *result, ResponseType type) {
             [bself.tasksArray removeAllObjects];
             NSMutableArray *tasks = [result getResult];
             [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -86,7 +86,7 @@
             }
             [bself.tasksTableView.pullToRefreshView stopAnimating];
             [MBProgressHUD hideHUDForView:self.view animated:NO];
-        } onError:^(NSError *error) {
+        } onError:^(NSError *error, ResponseType type) {
             [bself.tasksTableView.pullToRefreshView stopAnimating];
             [MBProgressHUD hideHUDForView:self.view animated:NO];
         }];

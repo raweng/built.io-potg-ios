@@ -83,13 +83,13 @@
 		37919081177D6A950012DC04 /* bmp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3791907F177D6A950012DC04 /* bmp@2x.png */; };
 		37919084177D6AA40012DC04 /* aud.png in Resources */ = {isa = PBXBuildFile; fileRef = 37919082177D6AA40012DC04 /* aud.png */; };
 		37919085177D6AA40012DC04 /* aud@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37919083177D6AA40012DC04 /* aud@2x.png */; };
-		379B32061797F45F00EAB792 /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 379B32041797F45F00EAB792 /* BuiltIO.bundle */; };
-		379B32071797F45F00EAB792 /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 379B32051797F45F00EAB792 /* BuiltIO.framework */; };
 		37B74472178AD86B008194E0 /* EditMilestoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37B74471178AD86B008194E0 /* EditMilestoneController.m */; };
 		37E6E930177EF6CB00187B7F /* TaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E6E92F177EF6CB00187B7F /* TaskDetailViewController.m */; };
 		BA1FC7AF17B39C620011E5B1 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1FC7AE17B39C620011E5B1 /* Twitter.framework */; };
 		BA1FC7B117B39C670011E5B1 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1FC7B017B39C670011E5B1 /* Accounts.framework */; };
 		BA1FC7B317B39C6B0011E5B1 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1FC7B217B39C6B0011E5B1 /* Social.framework */; };
+		BA5494CB181ECD1C002C11FC /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5494C9181ECD1C002C11FC /* BuiltIO.framework */; };
+		BA5494CC181ECD1D002C11FC /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA5494CA181ECD1C002C11FC /* BuiltIO.bundle */; };
 		BA6D318F1795A1DF00ACD7FD /* AttachmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6D318D1795A1DF00ACD7FD /* AttachmentViewController.m */; };
 		BA6D31901795A1DF00ACD7FD /* AttachmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6D318E1795A1DF00ACD7FD /* AttachmentViewController.xib */; };
 		BA7E5A8F177320AB000DEB93 /* CreateProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7E5A8C177320AB000DEB93 /* CreateProjectViewController.m */; };
@@ -222,8 +222,6 @@
 		3791907F177D6A950012DC04 /* bmp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bmp@2x.png"; sourceTree = "<group>"; };
 		37919082177D6AA40012DC04 /* aud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aud.png; sourceTree = "<group>"; };
 		37919083177D6AA40012DC04 /* aud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aud@2x.png"; sourceTree = "<group>"; };
-		379B32041797F45F00EAB792 /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BuiltIO.bundle; path = "Projects On The Go/BuiltIO.bundle"; sourceTree = "<group>"; };
-		379B32051797F45F00EAB792 /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BuiltIO.framework; path = "Projects On The Go/BuiltIO.framework"; sourceTree = "<group>"; };
 		37B74470178AD86B008194E0 /* EditMilestoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMilestoneController.h; sourceTree = "<group>"; };
 		37B74471178AD86B008194E0 /* EditMilestoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMilestoneController.m; sourceTree = "<group>"; };
 		37BEF2DD1779E18000D7A040 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
@@ -236,6 +234,8 @@
 		BA1FC7AE17B39C620011E5B1 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		BA1FC7B017B39C670011E5B1 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		BA1FC7B217B39C6B0011E5B1 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		BA5494C9181ECD1C002C11FC /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuiltIO.framework; sourceTree = "<group>"; };
+		BA5494CA181ECD1C002C11FC /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BuiltIO.bundle; sourceTree = "<group>"; };
 		BA6D318C1795A1DF00ACD7FD /* AttachmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentViewController.h; sourceTree = "<group>"; };
 		BA6D318D1795A1DF00ACD7FD /* AttachmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentViewController.m; sourceTree = "<group>"; };
 		BA6D318E1795A1DF00ACD7FD /* AttachmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttachmentViewController.xib; sourceTree = "<group>"; };
@@ -286,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA1FC7B317B39C6B0011E5B1 /* Social.framework in Frameworks */,
+				BA5494CB181ECD1C002C11FC /* BuiltIO.framework in Frameworks */,
 				BA1FC7B117B39C670011E5B1 /* Accounts.framework in Frameworks */,
 				BA1FC7AF17B39C620011E5B1 /* Twitter.framework in Frameworks */,
 				376F7B99178198B5003B5D66 /* AssetsLibrary.framework in Frameworks */,
@@ -300,7 +301,6 @@
 				BAAB6E27176F223F007A2B1C /* UIKit.framework in Frameworks */,
 				BAAB6E29176F223F007A2B1C /* Foundation.framework in Frameworks */,
 				0493BE9CA863480A8AFF16CD /* libPods.a in Frameworks */,
-				379B32071797F45F00EAB792 /* BuiltIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +499,8 @@
 		BAAB6E1A176F223F007A2B1C = {
 			isa = PBXGroup;
 			children = (
+				BA5494C9181ECD1C002C11FC /* BuiltIO.framework */,
+				BA5494CA181ECD1C002C11FC /* BuiltIO.bundle */,
 				BA87629E17B607C800A6CFB7 /* icon@2x.png */,
 				BA87629C17B607C100A6CFB7 /* icon.png */,
 				BA1FC7B217B39C6B0011E5B1 /* Social.framework */,
@@ -523,8 +525,6 @@
 		BAAB6E25176F223F007A2B1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				379B32041797F45F00EAB792 /* BuiltIO.bundle */,
-				379B32051797F45F00EAB792 /* BuiltIO.framework */,
 				376F7B98178198B5003B5D66 /* AssetsLibrary.framework */,
 				37833F4817816BF800DB534C /* MobileCoreServices.framework */,
 				3767236F177AB933003EE9C4 /* CoreLocation.framework */,
@@ -677,6 +677,7 @@
 				3791905D177D69C30012DC04 /* file@2x.png in Resources */,
 				37919062177D69DE0012DC04 /* xls.png in Resources */,
 				37919063177D69DE0012DC04 /* xls@2x.png in Resources */,
+				BA5494CC181ECD1D002C11FC /* BuiltIO.bundle in Resources */,
 				37919064177D69DE0012DC04 /* zip.png in Resources */,
 				37919065177D69DE0012DC04 /* zip@2x.png in Resources */,
 				37919068177D69EC0012DC04 /* vsd.png in Resources */,
@@ -697,7 +698,6 @@
 				37919085177D6AA40012DC04 /* aud@2x.png in Resources */,
 				375110981782BD92001AF66E /* addButton.png in Resources */,
 				BA6D31901795A1DF00ACD7FD /* AttachmentViewController.xib in Resources */,
-				379B32061797F45F00EAB792 /* BuiltIO.bundle in Resources */,
 				BA87629D17B607C100A6CFB7 /* icon.png in Resources */,
 				BA87629F17B607C800A6CFB7 /* icon@2x.png in Resources */,
 			);
@@ -859,8 +859,9 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Projects On The Go/built.io\"",
-					"\"$(SRCROOT)/Projects On The Go\"",
+					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go/built.io\\\"",
+					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go\\\"",
+					"/Users/akshay/github/built.io-potg-ios",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Projects On The Go/Projects On The Go-Prefix.pch";
@@ -878,8 +879,9 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Projects On The Go/built.io\"",
-					"\"$(SRCROOT)/Projects On The Go\"",
+					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go/built.io\\\"",
+					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go\\\"",
+					"/Users/akshay/github/built.io-potg-ios",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Projects On The Go/Projects On The Go-Prefix.pch";

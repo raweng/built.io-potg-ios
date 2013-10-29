@@ -75,7 +75,7 @@
         [query includeRefFieldWithKey:[NSArray arrayWithObject:@"assignees"]];
         
         //fire the query
-        [query exec:^(QueryResult *result) {
+        [query exec:^(QueryResult *result, ResponseType type) {
             [bself.milestones removeAllObjects];
             NSMutableArray *milestone = [result getResult];
             [milestone enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -84,7 +84,7 @@
             }];
             [bself.milestoneTableView.pullToRefreshView stopAnimating];
             [bself.milestoneTableView reloadData];
-        } onError:^(NSError *error) {
+        } onError:^(NSError *error, ResponseType type) {
             [bself.milestoneTableView.pullToRefreshView stopAnimating];
         }];
     }];

@@ -170,42 +170,36 @@ enum PannelState {
     self.progressHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.progressHUD.dimBackground = YES;
     
+    NSString *projectModerator = [NSString stringWithFormat:@"%@_moderators",[self.builtObject objectForKey:@"name"]];
     
-    BuiltRole *role = [BuiltRole role];
-    [role fetchRolesOnSuccess:^(NSMutableArray *rolesObjects) {
-        
-        //moderator has read, write, update permissions in a project
-        NSString *projectModerator = [NSString stringWithFormat:@"%@_moderators",[self.builtObject objectForKey:@"name"]];
-        [role getRole:projectModerator onSuccess:^(RoleObject *roleObject) {
-            if ([roleObject hasUser:[[BuiltUser currentUser] uid]]) {
-                //user is moderator
-                self.canCreateTask = YES;
-                self.canCreateMilestone = YES;
-                self.canDeleteBug = YES;
-                self.canDeleteMilestone = YES;
-                self.canDeleteTasks = YES;
-            }
-        } onError:^(NSError *error) {
-        }];
-        
-        //admin has read, write, update permissions on all project
-        if (!self.canCreateTask) {
-            [role getRole:@"admin" onSuccess:^(RoleObject *roleObject) {
-                if ([roleObject hasUser:[[BuiltUser currentUser] uid]]) {
-                    //user is admin
-                    self.canCreateTask = YES;
-                    self.canCreateMilestone = YES;
-                    self.canDeleteBug = YES;
-                    self.canDeleteMilestone = YES;
-                    self.canDeleteTasks = YES;
-                }
-            } onError:^(NSError *error) {
-                
-            }];
-        }
+    BuiltQuery *rolesQuery = [BuiltRole getRolesQuery];
+    [rolesQuery exec:^(QueryResult *result, ResponseType type) {
+       [[result getRoles] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+           BuiltRole *role = (BuiltRole *)obj;
+           if ([role.roleName isEqualToString:projectModerator]) {
+               if ([role hasUser:[[BuiltUser currentUser] uid]]) {
+                   //user is moderator
+                   self.canCreateTask = YES;
+                   self.canCreateMilestone = YES;
+                   self.canDeleteBug = YES;
+                   self.canDeleteMilestone = YES;
+                   self.canDeleteTasks = YES;
+               }
+           }
+           if ([role.roleName isEqualToString:@"admin"]) {
+               if ([role hasUser:[[BuiltUser currentUser] uid]]) {
+                   //user is admin
+                   self.canCreateTask = YES;
+                   self.canCreateMilestone = YES;
+                   self.canDeleteBug = YES;
+                   self.canDeleteMilestone = YES;
+                   self.canDeleteTasks = YES;
+               }
+           }
+       }];
         [self.progressHUD hide:YES afterDelay:3.0];
         [self showInitialBugsViewWithProjectName:self.builtObject];
-    } onError:^(NSError *error) {
+    } onError:^(NSError *error, ResponseType type) {
         [self.progressHUD hide:YES afterDelay:3.0];
         [self showInitialBugsViewWithProjectName:self.builtObject];
     }];

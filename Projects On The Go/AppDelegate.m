@@ -33,7 +33,7 @@
     // [Built initializeWithApiKey:@"APPLICATION_API_KEY" andUid:@"APPLICATION_UID"];
     // ----------------------------------------------------------------------------
     
-    [Built initializeWithApiKey:@"api_key_here" andUid:@"app_uid_here"];
+    [Built initializeWithApiKey:@"blt3b011c0e38ed1d82" andUid:@"potg"];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -118,22 +118,18 @@
     From the fetched roles get role named 'admin'
  */
 - (void)checkForUserRightsAndLoadProjects{
-    BuiltRole *role = [BuiltRole role];
-    [role fetchRolesOnSuccess:^(NSMutableArray *rolesObjects) {
-        //admin
-        [role getRole:@"admin" onSuccess:^(RoleObject *roleObject) {
-            if ([roleObject hasUser:[[BuiltUser currentUser] uid]]) {
-                //user is admin
-                [self loadProjects:YES];
-            }else{
-                [self loadProjects:NO];
-            }
-        } onError:^(NSError *error) {
+    BuiltQuery *rolesQuery = [BuiltRole getRolesQuery];
+    [rolesQuery whereKey:@"name" equalTo:@"admin"];
+    
+    [rolesQuery exec:^(QueryResult *result, ResponseType type) {
+        if([[[result getRoles] objectAtIndex:0] hasUser:[[BuiltUser currentUser] uid]]){
+            [self loadProjects:YES];
+        }else{
             [self loadProjects:NO];
-        }];
-    } onError:^(NSError *error) {
+        }
+    } onError:^(NSError *error, ResponseType type) {
         
-    }]; 
+    }];    
 }
 
 -(void)loginFailedWithError:(NSError *)error{

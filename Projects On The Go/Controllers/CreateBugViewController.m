@@ -232,28 +232,44 @@
     [creatingBugHUD setLabelText:@"Creating Bug..."];
     
     if (self.imageAttachments.count > 0 && self.imagesNameList.count > 0) {
+        NSMutableArray *UIDs = [NSMutableArray array];
         [self.imageAttachments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             //add image
-            FileObject *fileObject = [FileObject fileObject];
-            [fileObject setImage:obj forKey:[self.imagesNameList objectAtIndex:idx]];
+//            FileObject *fileObject = [FileObject fileObject];
+//            [fileObject setImage:obj forKey:[self.imagesNameList objectAtIndex:idx]];
+//            
+//            [self.file addFile:fileObject forKey:[self.imagesNameList objectAtIndex:idx]];
             
-            [self.file addFile:fileObject forKey:[self.imagesNameList objectAtIndex:idx]];
-        }];
-        //upload attachments if any
-        [self.file saveOnSuccess:^(NSDictionary *fileUploadDictionary) {
-            NSMutableArray *UIDs = [NSMutableArray array];
-            
-            [fileUploadDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                FileObject *fileObj = (FileObject *)obj;
-                [UIDs addObject:[fileObj uid]];
+            BuiltFile *image = [BuiltFile file];
+            [image setImage:obj forKey:[self.imagesNameList objectAtIndex:idx]];
+            [image saveOnSuccess:^{
+                [UIDs addObject:image.uid];
+                if (idx == (self.imageAttachments.count - 1)) {
+                    if (UIDs.count > 0) {
+                        [bug setObject:UIDs forKey:@"attachments"];
+                    }
+                    [self createObject:bug];
+                }
+            } onError:^(NSError *error) {
+                [self createObject:bug];
             }];
-            if (UIDs.count > 0) {
-                [bug setObject:UIDs forKey:@"attachments"];
-            }
-            [self createObject:bug];
-        } onError:^(NSError *error) {
-            [self createObject:bug];
-        }];        
+        }];
+        
+        //upload attachments if any
+//        [self.file saveOnSuccess:^(NSDictionary *fileUploadDictionary) {
+//            NSMutableArray *UIDs = [NSMutableArray array];
+//            
+//            [fileUploadDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+//                FileObject *fileObj = (FileObject *)obj;
+//                [UIDs addObject:[fileObj uid]];
+//            }];
+//            if (UIDs.count > 0) {
+//                [bug setObject:UIDs forKey:@"attachments"];
+//            }
+//            [self createObject:bug];
+//        } onError:^(NSError *error) {
+//            [self createObject:bug];
+//        }];        
     }else{
         [self createObject:bug];
     }    

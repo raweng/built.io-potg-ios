@@ -95,6 +95,8 @@
 		BA7E5A9D17732496000DEB93 /* UsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7E5A9C17732496000DEB93 /* UsersTableViewController.m */; };
 		BA87629D17B607C100A6CFB7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BA87629C17B607C100A6CFB7 /* icon.png */; };
 		BA87629F17B607C800A6CFB7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA87629E17B607C800A6CFB7 /* icon@2x.png */; };
+		BA8C991D18B2147F001C1E90 /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8C991B18B2147F001C1E90 /* BuiltIO.framework */; };
+		BA8C991E18B2147F001C1E90 /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA8C991C18B2147F001C1E90 /* BuiltIO.bundle */; };
 		BAAB6E27176F223F007A2B1C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAB6E26176F223F007A2B1C /* UIKit.framework */; };
 		BAAB6E29176F223F007A2B1C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAB6E28176F223F007A2B1C /* Foundation.framework */; };
 		BAAB6E2B176F223F007A2B1C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAB6E2A176F223F007A2B1C /* CoreGraphics.framework */; };
@@ -242,6 +244,8 @@
 		BA7E5A9C17732496000DEB93 /* UsersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsersTableViewController.m; sourceTree = "<group>"; };
 		BA87629C17B607C100A6CFB7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		BA87629E17B607C800A6CFB7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		BA8C991B18B2147F001C1E90 /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuiltIO.framework; sourceTree = "<group>"; };
+		BA8C991C18B2147F001C1E90 /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BuiltIO.bundle; sourceTree = "<group>"; };
 		BA9F2A631796A4AE007342D3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BAAB6E23176F223F007A2B1C /* Projects On The Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Projects On The Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAAB6E26176F223F007A2B1C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -286,6 +290,7 @@
 				BA1FC7AF17B39C620011E5B1 /* Twitter.framework in Frameworks */,
 				376F7B99178198B5003B5D66 /* AssetsLibrary.framework in Frameworks */,
 				37833F4917816BF900DB534C /* MobileCoreServices.framework in Frameworks */,
+				BA8C991D18B2147F001C1E90 /* BuiltIO.framework in Frameworks */,
 				37672370177AB933003EE9C4 /* CoreLocation.framework in Frameworks */,
 				BAAB6E69176F258F007A2B1C /* CoreTelephony.framework in Frameworks */,
 				BAAB6E67176F2588007A2B1C /* CFNetwork.framework in Frameworks */,
@@ -494,6 +499,8 @@
 		BAAB6E1A176F223F007A2B1C = {
 			isa = PBXGroup;
 			children = (
+				BA8C991B18B2147F001C1E90 /* BuiltIO.framework */,
+				BA8C991C18B2147F001C1E90 /* BuiltIO.bundle */,
 				BA87629E17B607C800A6CFB7 /* icon@2x.png */,
 				BA87629C17B607C100A6CFB7 /* icon.png */,
 				BA1FC7B217B39C6B0011E5B1 /* Social.framework */,
@@ -643,6 +650,7 @@
 				BAAB6E3D176F223F007A2B1C /* Default-568h@2x.png in Resources */,
 				3766BF64176F3A720082D038 /* ButtonMenu.png in Resources */,
 				3766BF65176F3A720082D038 /* ButtonMenu@2x.png in Resources */,
+				BA8C991E18B2147F001C1E90 /* BuiltIO.bundle in Resources */,
 				376FB8FB17707718001CC3F0 /* earth.png in Resources */,
 				376FB8FD17707AE5001CC3F0 /* bullet_black.png in Resources */,
 				376FB90517708015001CC3F0 /* BugTableViewCell.xib in Resources */,

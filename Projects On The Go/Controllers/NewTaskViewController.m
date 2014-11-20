@@ -388,7 +388,7 @@ CGFloat topCoordinate;
 
 #pragma mark UserListDelegate
 -(void)selectedUserList:(NSArray *)usersArray {
-    for (id object  in usersArray) {
+    for (int i=0; i<usersArray.count; i++) {
         [self stepsView];
     }
 }

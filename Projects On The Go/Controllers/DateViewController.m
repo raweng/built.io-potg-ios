@@ -50,9 +50,6 @@
 - (void)changeDateInLabel:(id)sender{
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateStyle = NSDateFormatterMediumStyle;
-	NSString *selDate = [NSString stringWithFormat:@"%@",
-                  [df stringFromDate:self.datePicker.date]];
-    
     if (date == START_DATE) {
         [self.datePickerDelegate startDateSelected:self.datePicker.date];
     }else if (date == END_DATE){

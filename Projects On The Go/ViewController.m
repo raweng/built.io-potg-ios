@@ -23,7 +23,7 @@
 #import "NewMilestoneViewController.h"
 #import "NewTaskViewController.h"
 #import "PannelView.h"
-#import <MBProgressHUD/MBProgressHUD.h>
+#import "MBProgressHUD.h"
 
 enum PannelState {
     PannelStateOut,
@@ -238,7 +238,7 @@ enum PannelState {
         self.mainViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ButtonMenu"] style:UIBarButtonItemStyleDone target:self action:@selector(revealLeftSidebar:)];
         
         if (self.canCreateTask) {
-            self.mainViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Create Task" style:UIBarButtonSystemItemAction target:self action:@selector(createTask)];
+            self.mainViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Create Task" style:UIBarButtonItemStylePlain target:self action:@selector(createTask)];
         }
         
         self.mainViewController.navigationItem.revealSidebarDelegate = self;
@@ -266,7 +266,7 @@ enum PannelState {
         [self.navigationController pushViewController:self.mainViewController animated:NO];
         self.mainViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ButtonMenu"] style:UIBarButtonItemStyleDone target:self action:@selector(revealLeftSidebar:)];
                 
-        self.mainViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Create Bug" style:UIBarButtonSystemItemAction target:self action:@selector(createBug)];
+        self.mainViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Create Bug" style:UIBarButtonItemStyleDone target:self action:@selector(createBug)];
         
         self.mainViewController.navigationItem.revealSidebarDelegate = self;
     }else{

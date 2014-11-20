@@ -8,7 +8,7 @@
 
 #import "EditBugDetailsController.h"
 #import "UserListPickerViewController.h"
-#import <MBProgressHUD/MBProgressHUD.h>
+#import "MBProgressHUD.h"
 #import "THContactPickerView.h"
 #import "UsersTableViewController.h"
 #import "AppUtils.h"
@@ -377,9 +377,7 @@
 #pragma mark UserListDelegaet
 
 -(void)selectedUserList:(NSArray *)usersArray {
-    for (NSString *object in usersArray) {
-//        self.assigneeLabel.text = object;
-    }
+    //nothing to do here
 }
 
 #pragma mark - THContactPickerDelegate

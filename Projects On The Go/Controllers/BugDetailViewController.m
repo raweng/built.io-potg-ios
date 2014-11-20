@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AppUtils.h"
 #import "NSDate+Addition.h"
-#import <MBProgressHUD/MBProgressHUD.h>
+#import "MBProgressHUD.h"
 #import "CommentsViewController.h"
 #import "SVPullToRefresh.h"
 #import "AttachmentViewController.h"

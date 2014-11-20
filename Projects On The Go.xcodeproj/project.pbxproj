@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0493BE9CA863480A8AFF16CD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F296617EF0E4461965623FE /* libPods.a */; };
+		23323C2E1A1E395900BC79AC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 23323C2B1A1E395900BC79AC /* MBProgressHUD.m */; };
+		23323C321A1E3AA700BC79AC /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23323C301A1E3AA700BC79AC /* BuiltIO.bundle */; };
+		23323C341A1E3BAA00BC79AC /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23323C311A1E3AA700BC79AC /* BuiltIO.framework */; };
 		370142451771F75400A885E4 /* BugDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 370142441771F75400A885E4 /* BugDetailViewController.m */; };
 		373BC7D21772C52700F6F581 /* CreateBugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 373BC7D01772C52700F6F581 /* CreateBugViewController.m */; };
 		373BC7D31772C52700F6F581 /* CreateBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 373BC7D11772C52700F6F581 /* CreateBugViewController.xib */; };
@@ -95,8 +97,6 @@
 		BA7E5A9D17732496000DEB93 /* UsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7E5A9C17732496000DEB93 /* UsersTableViewController.m */; };
 		BA87629D17B607C100A6CFB7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BA87629C17B607C100A6CFB7 /* icon.png */; };
 		BA87629F17B607C800A6CFB7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA87629E17B607C800A6CFB7 /* icon@2x.png */; };
-		BA8C991D18B2147F001C1E90 /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8C991B18B2147F001C1E90 /* BuiltIO.framework */; };
-		BA8C991E18B2147F001C1E90 /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA8C991C18B2147F001C1E90 /* BuiltIO.bundle */; };
 		BAAB6E27176F223F007A2B1C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAB6E26176F223F007A2B1C /* UIKit.framework */; };
 		BAAB6E29176F223F007A2B1C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAB6E28176F223F007A2B1C /* Foundation.framework */; };
 		BAAB6E2B176F223F007A2B1C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAB6E2A176F223F007A2B1C /* CoreGraphics.framework */; };
@@ -120,7 +120,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0F296617EF0E4461965623FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		23323C2A1A1E395900BC79AC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		23323C2B1A1E395900BC79AC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		23323C301A1E3AA700BC79AC /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BuiltIO.bundle; sourceTree = "<group>"; };
+		23323C311A1E3AA700BC79AC /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuiltIO.framework; sourceTree = "<group>"; };
 		370142431771F75400A885E4 /* BugDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugDetailViewController.h; sourceTree = "<group>"; };
 		370142441771F75400A885E4 /* BugDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugDetailViewController.m; sourceTree = "<group>"; };
 		373BC7CF1772C52700F6F581 /* CreateBugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBugViewController.h; sourceTree = "<group>"; };
@@ -242,11 +245,9 @@
 		BA7E5A8E177320AB000DEB93 /* CreateProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateProjectViewController.h; sourceTree = "<group>"; };
 		BA7E5A9B17732496000DEB93 /* UsersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsersTableViewController.h; sourceTree = "<group>"; };
 		BA7E5A9C17732496000DEB93 /* UsersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsersTableViewController.m; sourceTree = "<group>"; };
-		BA87629C17B607C100A6CFB7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		BA87629E17B607C800A6CFB7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
-		BA8C991B18B2147F001C1E90 /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuiltIO.framework; sourceTree = "<group>"; };
-		BA8C991C18B2147F001C1E90 /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BuiltIO.bundle; sourceTree = "<group>"; };
-		BA9F2A631796A4AE007342D3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		BA87629C17B607C100A6CFB7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../icon.png; sourceTree = "<group>"; };
+		BA87629E17B607C800A6CFB7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../../icon@2x.png"; sourceTree = "<group>"; };
+		BA9F2A631796A4AE007342D3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
 		BAAB6E23176F223F007A2B1C /* Projects On The Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Projects On The Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAAB6E26176F223F007A2B1C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BAAB6E28176F223F007A2B1C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -265,7 +266,6 @@
 		BAAB6E64176F2581007A2B1C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BAAB6E66176F2588007A2B1C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		BAAB6E68176F258F007A2B1C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		F8931DA988204E76AA7780EB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		FA5835F2177828D3004E2A41 /* PannelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PannelView.h; sourceTree = "<group>"; };
 		FA5835F3177828D3004E2A41 /* PannelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PannelView.m; sourceTree = "<group>"; };
 		FA6A71E4177588870093981F /* U2KPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = U2KPickerView.m; sourceTree = "<group>"; };
@@ -290,9 +290,9 @@
 				BA1FC7AF17B39C620011E5B1 /* Twitter.framework in Frameworks */,
 				376F7B99178198B5003B5D66 /* AssetsLibrary.framework in Frameworks */,
 				37833F4917816BF900DB534C /* MobileCoreServices.framework in Frameworks */,
-				BA8C991D18B2147F001C1E90 /* BuiltIO.framework in Frameworks */,
 				37672370177AB933003EE9C4 /* CoreLocation.framework in Frameworks */,
 				BAAB6E69176F258F007A2B1C /* CoreTelephony.framework in Frameworks */,
+				23323C341A1E3BAA00BC79AC /* BuiltIO.framework in Frameworks */,
 				BAAB6E67176F2588007A2B1C /* CFNetwork.framework in Frameworks */,
 				BAAB6E65176F2581007A2B1C /* SystemConfiguration.framework in Frameworks */,
 				BAAB6E63176F2579007A2B1C /* Security.framework in Frameworks */,
@@ -300,13 +300,21 @@
 				BAAB6E61176F2566007A2B1C /* QuartzCore.framework in Frameworks */,
 				BAAB6E27176F223F007A2B1C /* UIKit.framework in Frameworks */,
 				BAAB6E29176F223F007A2B1C /* Foundation.framework in Frameworks */,
-				0493BE9CA863480A8AFF16CD /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23323C281A1E395900BC79AC /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				23323C2A1A1E395900BC79AC /* MBProgressHUD.h */,
+				23323C2B1A1E395900BC79AC /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		373BC7E11772E26C00F6F581 /* Extensions & Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +327,7 @@
 		3766BF53176F35A10082D038 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				23323C281A1E395900BC79AC /* MBProgressHUD */,
 				37BEF2DC1779E18000D7A040 /* SVPullToRefresh */,
 				377A599917741CEE00043933 /* THContactPicker */,
 				3766BF54176F35C80082D038 /* JTRevealSidebar */,
@@ -431,6 +440,9 @@
 		378E21B1177C4E2800ADF76D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BA87629E17B607C800A6CFB7 /* icon@2x.png */,
+				BA87629C17B607C100A6CFB7 /* icon.png */,
+				BA9F2A631796A4AE007342D3 /* Default-568h@2x.png */,
 				375110971782BD92001AF66E /* addButton.png */,
 				37919049177D69410012DC04 /* Attachments */,
 				376FB90617708BE6001CC3F0 /* body_bg.png */,
@@ -499,18 +511,11 @@
 		BAAB6E1A176F223F007A2B1C = {
 			isa = PBXGroup;
 			children = (
-				BA8C991B18B2147F001C1E90 /* BuiltIO.framework */,
-				BA8C991C18B2147F001C1E90 /* BuiltIO.bundle */,
-				BA87629E17B607C800A6CFB7 /* icon@2x.png */,
-				BA87629C17B607C100A6CFB7 /* icon.png */,
-				BA1FC7B217B39C6B0011E5B1 /* Social.framework */,
-				BA1FC7B017B39C670011E5B1 /* Accounts.framework */,
-				BA1FC7AE17B39C620011E5B1 /* Twitter.framework */,
-				BA9F2A631796A4AE007342D3 /* Default-568h@2x.png */,
+				23323C301A1E3AA700BC79AC /* BuiltIO.bundle */,
+				23323C311A1E3AA700BC79AC /* BuiltIO.framework */,
 				BAAB6E2C176F223F007A2B1C /* Projects On The Go */,
 				BAAB6E25176F223F007A2B1C /* Frameworks */,
 				BAAB6E24176F223F007A2B1C /* Products */,
-				F8931DA988204E76AA7780EB /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -525,6 +530,9 @@
 		BAAB6E25176F223F007A2B1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA1FC7B217B39C6B0011E5B1 /* Social.framework */,
+				BA1FC7B017B39C670011E5B1 /* Accounts.framework */,
+				BA1FC7AE17B39C620011E5B1 /* Twitter.framework */,
 				376F7B98178198B5003B5D66 /* AssetsLibrary.framework */,
 				37833F4817816BF800DB534C /* MobileCoreServices.framework */,
 				3767236F177AB933003EE9C4 /* CoreLocation.framework */,
@@ -536,7 +544,6 @@
 				BAAB6E26176F223F007A2B1C /* UIKit.framework */,
 				BAAB6E28176F223F007A2B1C /* Foundation.framework */,
 				BAAB6E2A176F223F007A2B1C /* CoreGraphics.framework */,
-				0F296617EF0E4461965623FE /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -598,11 +605,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAAB6E40176F223F007A2B1C /* Build configuration list for PBXNativeTarget "Projects On The Go" */;
 			buildPhases = (
-				1CAEDBED25FD420AB2A8FB52 /* Check Pods Manifest.lock */,
 				BAAB6E1F176F223F007A2B1C /* Sources */,
 				BAAB6E20176F223F007A2B1C /* Frameworks */,
 				BAAB6E21176F223F007A2B1C /* Resources */,
-				3A6AB02339A24E749E730C96 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -650,7 +655,6 @@
 				BAAB6E3D176F223F007A2B1C /* Default-568h@2x.png in Resources */,
 				3766BF64176F3A720082D038 /* ButtonMenu.png in Resources */,
 				3766BF65176F3A720082D038 /* ButtonMenu@2x.png in Resources */,
-				BA8C991E18B2147F001C1E90 /* BuiltIO.bundle in Resources */,
 				376FB8FB17707718001CC3F0 /* earth.png in Resources */,
 				376FB8FD17707AE5001CC3F0 /* bullet_black.png in Resources */,
 				376FB90517708015001CC3F0 /* BugTableViewCell.xib in Resources */,
@@ -677,6 +681,7 @@
 				3791905C177D69C30012DC04 /* file.png in Resources */,
 				3791905D177D69C30012DC04 /* file@2x.png in Resources */,
 				37919062177D69DE0012DC04 /* xls.png in Resources */,
+				23323C321A1E3AA700BC79AC /* BuiltIO.bundle in Resources */,
 				37919063177D69DE0012DC04 /* xls@2x.png in Resources */,
 				37919064177D69DE0012DC04 /* zip.png in Resources */,
 				37919065177D69DE0012DC04 /* zip@2x.png in Resources */,
@@ -705,37 +710,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		1CAEDBED25FD420AB2A8FB52 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-		};
-		3A6AB02339A24E749E730C96 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		BAAB6E1F176F223F007A2B1C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -763,6 +737,7 @@
 				373BC7F2177321CB00F6F581 /* EditBugDetailsController.m in Sources */,
 				FAAA19B517731CD2006CC36F /* StepsView.m in Sources */,
 				FAAA19B817731D45006CC36F /* NewTaskViewController.m in Sources */,
+				23323C2E1A1E395900BC79AC /* MBProgressHUD.m in Sources */,
 				BA7E5A8F177320AB000DEB93 /* CreateProjectViewController.m in Sources */,
 				BA7E5A9D17732496000DEB93 /* UsersTableViewController.m in Sources */,
 				377A59A017741CEE00043933 /* THBubbleColor.m in Sources */,
@@ -855,13 +830,10 @@
 		};
 		BAAB6E41176F223F007A2B1C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8931DA988204E76AA7780EB /* Pods.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go/built.io\\\"",
-					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go\\\"",
-					"/Users/akshay/github/built.io-potg-ios",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Projects On The Go/Projects On The Go-Prefix.pch";
@@ -875,13 +847,10 @@
 		};
 		BAAB6E42176F223F007A2B1C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8931DA988204E76AA7780EB /* Pods.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go/built.io\\\"",
-					"\\\"$(SRCROOT)/Projects\\ On\\ The\\ Go\\\"",
-					"/Users/akshay/github/built.io-potg-ios",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Projects On The Go/Projects On The Go-Prefix.pch";

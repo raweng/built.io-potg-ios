@@ -152,10 +152,6 @@
     self.selectedIndexPath = indexPath;
 }
 
--(BOOL)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    return YES;
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.milestones.count;
 }

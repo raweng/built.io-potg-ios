@@ -57,7 +57,6 @@
     
     NSDateFormatter* dateFormatterA = [[NSDateFormatter alloc] init];
     [dateFormatterA setDateFormat:@"yyyy-MM-dd"];
-    NSDate *dateString = [dateFormatterA dateFromString:timeStamp];
     
     NSDate *currentDate = [NSDate date];
     NSCalendar* calendar = [NSCalendar currentCalendar];

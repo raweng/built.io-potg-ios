@@ -1,6 +1,5 @@
 //
 //  NSDate+Addition.m
-//  tibbr4
 //
 //  Created by Reefaq on 31/08/12.
 //  Copyright (c) 2012 raweng. All rights reserved.
@@ -54,7 +53,6 @@
     if (nil == formatter) {
         formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"h:mm a";
-//        formatter.dateFormat = tibbrLocalizedString(@"my_wall_view.date_format_h_mm_a.title", @"Date format: 1:05 pm");
         formatter.locale = [NSLocale currentLocale];
     }
     return [formatter stringFromDate:self];
@@ -67,7 +65,6 @@
     if (nil == formatter) {
         formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"EEEE, LLLL d, YYYY";
-//        tibbrLocalizedString(@"my_wall_view.date_format_EEEE_LLLL_YYYY.title", @"Date format: Monday, July 27, 2009");
         formatter.locale = [NSLocale currentLocale];
     }
     return [formatter stringFromDate:self];
@@ -86,7 +83,6 @@
         if (nil == formatter) {
             formatter = [[NSDateFormatter alloc] init];
             formatter.dateFormat = @"EEEE";
-//            formatter.dateFormat = tibbrLocalizedString(@"my_wall_view.date_format_EEEE.title", @"Date format: Monday");
             formatter.locale = [NSLocale currentLocale];
         }
         return [formatter stringFromDate:self];
@@ -96,7 +92,6 @@
         if (nil == formatter) {
             formatter = [[NSDateFormatter alloc] init];
             formatter.dateFormat = @"M/d/yy";
-//            formatter.dateFormat = tibbrLocalizedString(@"my_wall_view.date_format_M_d_yy.title", @"Date format: 7/27/09");
             formatter.locale = [NSLocale currentLocale];
         }
         return [formatter stringFromDate:self];
@@ -108,7 +103,6 @@
     if (nil == formatter) {
         formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"EEEE h:mm a";
-//        formatter.dateFormat = tibbrLocalizedString(@"my_wall_view.date_format_EEEE_h_mm_a.title", @"Date format: Mon 1:05 pm");
         formatter.locale = [NSLocale currentLocale];
     }
     return [formatter stringFromDate:self];
@@ -126,7 +120,6 @@
         if (nil == formatter) {
             formatter = [[NSDateFormatter alloc] init];
             formatter.dateFormat = @"EEE h:mm a";
-//            formatter.dateFormat = tibbrLocalizedString(@"my_wall_view.date_format_EEE_h_mm_a.title", @"Date format: Mon 1:05 pm");
             formatter.locale = [NSLocale currentLocale];
         }
         return [formatter stringFromDate:self];
@@ -136,7 +129,6 @@
         if (nil == formatter) {
             formatter = [[NSDateFormatter alloc] init];
             formatter.dateFormat = @"MMM d, h:mm a";
-//            formatter.dateFormat = tibbrLocalizedString(@"my_wall_view.date_format_MMM_D_mm_a.title", @"Date format: Jul 27 1:05 pm");
             formatter.locale = [NSLocale currentLocale];
         }
         return [formatter stringFromDate:self];
@@ -144,34 +136,10 @@
 
 }
 - (NSString*)formatDateTime {
-//    NSTimeInterval diff = abs([self timeIntervalSinceNow]);
-//    if (diff < TT_DAY) {
-//        return [self formatTime];
-//        
-//    } else if (diff < TT_5_DAYS) {
-//        static NSDateFormatter* formatter = nil;
-//        if (nil == formatter) {
-//            formatter = [[NSDateFormatter alloc] init];
-//            formatter.dateFormat = tibbrLocalizedString(@"EEE h:mm a", @"Date format: Mon 1:05 pm");
-//            formatter.locale = [NSLocale currentLocale];
-//        }
-//        return [formatter stringFromDate:self];
-//        
-//    } else {
-//        static NSDateFormatter* formatter = nil;
-//        if (nil == formatter) {
-//            formatter = [[NSDateFormatter alloc] init];
-//            formatter.dateFormat = tibbrLocalizedString(@"MMM d h:mm a", @"Date format: Jul 27 1:05 pm");
-//            formatter.locale = [NSLocale currentLocale];
-//        }
-//        return [formatter stringFromDate:self];
-//    }
-    
     static NSDateFormatter* formatter = nil;
     if (nil == formatter) {
         formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"MMMM d, yyyy";
-//        formatter.dateFormat = tibbrLocalizedString(@"my_wall_view.date_format_MMMM_d_yyyy.title", @"Date format: Jul 27 1:05 pm");
         formatter.locale = [NSLocale currentLocale];
     }
     NSString *dateString = [formatter stringFromDate:self];
@@ -336,43 +304,5 @@
     }
     return [formatter stringFromDate:self];
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-//-(NSString *)timeAgo {
-//    NSDate *now = [NSDate date];
-//    double deltaSeconds = fabs([self timeIntervalSinceDate:now]);
-//    double deltaMinutes = deltaSeconds / 60.0f;
-//    
-//    if(deltaSeconds < 5) {
-//        return tibbrLocalizedString(@"my_wall_view.just_now.title",@"Just now" );
-//    } else if(deltaSeconds < 60) {
-//        return [NSString stringWithFormat:tibbrLocalizedString(@"my_wall_view.seconds.title", @""), (int)deltaSeconds];
-//    } else if(deltaSeconds < 120) {
-//        return tibbrLocalizedString(@"my_wall_view.A_minute_ago.title",@"A minute ago" );
-//    } else if (deltaMinutes < 60) {
-//        return [NSString stringWithFormat:tibbrLocalizedString(@"my_wall_view.minutes_ago.title", @""), (int)deltaMinutes];
-//    } else if (deltaMinutes < 120) {
-//        return tibbrLocalizedString(@"my_wall_view.An_hour_ago.title",@"An hour ago" );
-//    } else if (deltaMinutes < (24 * 60)) {
-//        return [NSString stringWithFormat:tibbrLocalizedString(@"my_wall_view.hours_ago.title", @""), (int)floor(deltaMinutes/60)];
-//    } else if (deltaMinutes < (24 * 60 * 2)) {
-//        return tibbrLocalizedString(@"my_wall_view.yesterday.title",@"Yesterday" );
-//    } else if (deltaMinutes < (24 * 60 * 7)) {
-//        return [NSString stringWithFormat:tibbrLocalizedString(@"my_wall_view.days_ago.title", @" days ago"), (int)floor(deltaMinutes/(60 * 24))];
-//    } else if (deltaMinutes < (24 * 60 * 14)) {
-//        return tibbrLocalizedString(@"my_wall_view.last_week.title",@"Last week" );
-//    } else if (deltaMinutes < (24 * 60 * 31)) {
-//        return [NSString stringWithFormat:tibbrLocalizedString(@"my_wall_view.weeks_ago.title", @" weeks ago"), (int)floor(deltaMinutes/(60 * 24 * 7))];
-//    } else if (deltaMinutes < (24 * 60 * 61)) {
-//        return tibbrLocalizedString(@"my_wall_view.last_month.title",@"Last month" );
-//    } else if (deltaMinutes < (24 * 60 * 365.25)) {
-//        return [NSString stringWithFormat:tibbrLocalizedString(@"my_wall_view.months_ago.title", @" months ago"), (int)floor(deltaMinutes/(60 * 24 * 30))];
-//    } else if (deltaMinutes < (24 * 60 * 731)) {
-//        return tibbrLocalizedString(@"my_wall_view.last_year.title",@"Last year" );
-//    }
-//    
-//    return [NSString stringWithFormat:tibbrLocalizedString(@"my_wall_view.years_ago.title", @" years ago"), (int)floor(deltaMinutes/(60 * 24 * 365))];
-//}
 
 @end

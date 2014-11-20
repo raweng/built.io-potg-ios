@@ -103,7 +103,7 @@
     }else {
         [valuesDictionary setValue:@"" forKey:TASKDESCRIPTION];
     }
-    [valuesDictionary setValue:[NSNumber numberWithInt:self.taskButton.tag] forKey:TASKBUG];
+    [valuesDictionary setValue:[NSNumber numberWithInteger:self.taskButton.tag] forKey:TASKBUG];
     return valuesDictionary;
 }
 /*

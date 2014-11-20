@@ -87,8 +87,4 @@
 
 - (NSString*)formatDay;//..
 
-/*
- * Returns time like '5 minutes ago, Yesterday, 1 month ago etc.'
- */
-- (NSString *)timeAgo;
 @end

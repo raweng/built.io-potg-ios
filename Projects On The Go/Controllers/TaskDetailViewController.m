@@ -8,7 +8,7 @@
 
 #import "TaskDetailViewController.h"
 #import "StepsView.h"
-#import <MBProgressHUD/MBProgressHUD.h>
+#import "MBProgressHUD.h"
 
 #define DESCRIPTION_AREA 1
 
@@ -39,7 +39,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(dismissController)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonSystemItemDone target:self action:@selector(dismissController)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(editTaskAction)];
 }
 

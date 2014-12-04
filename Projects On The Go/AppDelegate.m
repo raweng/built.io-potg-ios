@@ -122,13 +122,15 @@
     [rolesQuery whereKey:@"name" equalTo:@"admin"];
     
     [rolesQuery exec:^(QueryResult *result, ResponseType type) {
-        if([[[result getRoles] objectAtIndex:0] hasUser:[[BuiltUser currentUser] uid]]){
-            [self loadProjects:YES];
-        }else{
-            [self loadProjects:NO];
+        if ([result getRoles] && [result getRoles].count) {
+            if([[[result getRoles] objectAtIndex:0] hasUser:[[BuiltUser currentUser] uid]]){
+                [self loadProjects:YES];
+            }else{
+                [self loadProjects:NO];
+            }
         }
     } onError:^(NSError *error, ResponseType type) {
-        
+        //handle errors here
     }];
 }
 

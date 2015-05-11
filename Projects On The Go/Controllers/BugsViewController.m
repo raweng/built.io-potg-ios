@@ -116,7 +116,8 @@
          */
         
         //create a query to fetch bugs
-        BuiltQuery *bugsQuery = [BuiltQuery queryWithClassUID:@"bugs"];
+        BuiltClass *bugsClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"bugs"];
+        BuiltQuery *bugsQuery = [bugsClass query];
         
         //fetch bugs for current project
         [bugsQuery whereKey:@"project" containedIn:@[bself.builtObject.uid]];
@@ -131,25 +132,29 @@
         [bugsQuery includeOwner];
         
         //fire the query
-        [bugsQuery exec:^(QueryResult *result, ResponseType type) {
-            [bself.bugsList removeAllObjects];
-            NSMutableArray *results = [result getResult];
-            [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                [bself.bugsList addObject:(BuiltObject *)obj];
-            }];
-            if (bself.bugsList.count > 0) {
-                [bself.bugsTableView reloadData];
-            }else{
-                [bself.bugsTableView setHidden:YES];
-                [bself noBugsViewLayout];
+        
+        [bugsQuery execInBackground:^(ResponseType type, QueryResult *result, NSError *error) {
+            if (error == nil) {
+                [bself.bugsList removeAllObjects];
+                NSArray *results = [result getResult];
+                [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    [bself.bugsList addObject:(BuiltObject *)obj];
+                }];
+                if (bself.bugsList.count > 0) {
+                    [bself.bugsTableView reloadData];
+                }else{
+                    [bself.bugsTableView setHidden:YES];
+                    [bself noBugsViewLayout];
+                }
+                [bself.bugsTableView.pullToRefreshView stopAnimating];
+//                bself.bugsTableView.pullToRefreshView.lastUpdatedDate = [NSDate date];
+                [MBProgressHUD hideHUDForView:bself.view animated:NO];
+            }else {
+                [bself.bugsTableView.pullToRefreshView stopAnimating];
+                [MBProgressHUD hideHUDForView:bself.view animated:NO];
             }
-            [bself.bugsTableView.pullToRefreshView stopAnimating];
-            bself.bugsTableView.pullToRefreshView.lastUpdatedDate = [NSDate date];
-            [MBProgressHUD hideHUDForView:bself.view animated:NO];
-        } onError:^(NSError *error, ResponseType type) {
-            [bself.bugsTableView.pullToRefreshView stopAnimating];
-            [MBProgressHUD hideHUDForView:bself.view animated:NO];
         }];
+        
     }];
 }
 

@@ -172,43 +172,46 @@ enum PannelState {
     
     NSString *projectModerator = [NSString stringWithFormat:@"%@_moderators",[self.builtObject objectForKey:@"name"]];
     
-    BuiltQuery *rolesQuery = [BuiltRole getRolesQuery];
-    [rolesQuery exec:^(QueryResult *result, ResponseType type) {
-       [[result getRoles] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-           BuiltRole *role = (BuiltRole *)obj;
-           if ([role.roleName isEqualToString:projectModerator]) {
-               if ([role hasUser:[[BuiltUser currentUser] uid]]) {
-                   //user is moderator
-                   self.canCreateTask = YES;
-                   self.canCreateMilestone = YES;
-                   self.canDeleteBug = YES;
-                   self.canDeleteMilestone = YES;
-                   self.canDeleteTasks = YES;
-               }
-           }
-           if ([role.roleName isEqualToString:@"admin"]) {
-               if ([role hasUser:[[BuiltUser currentUser] uid]]) {
-                   //user is admin
-                   self.canCreateTask = YES;
-                   self.canCreateMilestone = YES;
-                   self.canDeleteBug = YES;
-                   self.canDeleteMilestone = YES;
-                   self.canDeleteTasks = YES;
-               }
-           }
-       }];
-        [self.progressHUD hide:YES afterDelay:3.0];
-        [self showInitialBugsViewWithProjectName:self.builtObject];
-    } onError:^(NSError *error, ResponseType type) {
-        [self.progressHUD hide:YES afterDelay:3.0];
-        [self showInitialBugsViewWithProjectName:self.builtObject];
+    BuiltQuery *rolesQuery = [[[AppDelegate sharedAppDelegate].builtApplication roleWithName:@"admin"] query];
+
+    [rolesQuery execInBackground:^(ResponseType type, QueryResult *result, NSError *error) {
+        if (error == nil) {
+            [[result getRoles] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                BuiltRole *role = (BuiltRole *)obj;
+                if ([role.roleName isEqualToString:projectModerator]) {
+                    if ([role hasUser:[[[AppDelegate sharedAppDelegate].builtApplication currentUser] uid]]) {
+                        //user is moderator
+                        self.canCreateTask = YES;
+                        self.canCreateMilestone = YES;
+                        self.canDeleteBug = YES;
+                        self.canDeleteMilestone = YES;
+                        self.canDeleteTasks = YES;
+                    }
+                }
+                if ([role.roleName isEqualToString:@"admin"]) {
+                    if ([role hasUser:[[[AppDelegate sharedAppDelegate].builtApplication currentUser] uid]]) {
+                        //user is admin
+                        self.canCreateTask = YES;
+                        self.canCreateMilestone = YES;
+                        self.canDeleteBug = YES;
+                        self.canDeleteMilestone = YES;
+                        self.canDeleteTasks = YES;
+                    }
+                }
+            }];
+            [self.progressHUD hide:YES afterDelay:3.0];
+            [self showInitialBugsViewWithProjectName:self.builtObject];
+        }else {
+            [self.progressHUD hide:YES afterDelay:3.0];
+            [self showInitialBugsViewWithProjectName:self.builtObject];
+        }
     }];
 }
 
 //load projects
 -(void)showProjects:(NSObject *)object andIndexPath:(NSIndexPath *)indexpath{
     //'project' is the uid of the class
-    ProjectViewController *projectVC = [[ProjectViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"project"];
+    ProjectViewController *projectVC = [[ProjectViewController alloc]initWithStyle:UITableViewStylePlain withBuiltClass:[[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"project"]];
     projectVC.view.backgroundColor = [UIColor viewFlipsideBackgroundColor];
     projectVC.title = (NSString *)object;
     self.mainViewController = projectVC;

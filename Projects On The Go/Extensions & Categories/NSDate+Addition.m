@@ -162,7 +162,6 @@
     if (elapsed > 0) {
         if (elapsed <= 1) {
             return @"in just a moment";
-//            return tibbrLocalizedString(@"my_wall_view.just_moment.title", @"");
         }
         else if (elapsed < TT_MINUTE) {
             int seconds = (int)(elapsed);
@@ -178,7 +177,6 @@
         }
         else if (elapsed < TT_HOUR*1.5) {
             return @"in about an hour";
-//            return tibbrLocalizedString(@"my_wall_view.in_hr.title", @"");
         }
         else if (elapsed < TT_DAY) {
             int hours = (int)((elapsed+TT_HOUR/2)/TT_HOUR);

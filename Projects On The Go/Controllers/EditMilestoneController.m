@@ -177,13 +177,13 @@
     
     [self prepareViews];
 
-    [self.assigneePicker.textView resignFirstResponder];
+//    [self.assigneePicker.textView resignFirstResponder];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.descriptionArea becomeFirstResponder];
-    [self.assigneePicker.textView resignFirstResponder];
+//    [self.assigneePicker.textView resignFirstResponder];
 }
 
 - (void)prepareViews{
@@ -279,13 +279,15 @@
     MBProgressHUD *progressHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progressHUD.dimBackground = YES;
     [progressHUD setLabelText:@"Deleting..."];
-    [self.milestone destroyOnSuccess:^{
-        [progressHUD setLabelText:@"Milestone Deleted!"];
-        [progressHUD hide:YES afterDelay:2.0];
-        [self performSelector:@selector(back) withObject:nil afterDelay:1.0];
-    } onError:^(NSError *error) {
-        [progressHUD setLabelText:@"Deletion Failed!"];
-        [progressHUD hide:YES afterDelay:2.0];
+    [self.milestone destroyInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [progressHUD setLabelText:@"Milestone Deleted!"];
+            [progressHUD hide:YES afterDelay:2.0];
+            [self performSelector:@selector(back) withObject:nil afterDelay:1.0];
+        }else {
+            [progressHUD setLabelText:@"Deletion Failed!"];
+            [progressHUD hide:YES afterDelay:2.0];
+        }
     }];
 }
 
@@ -319,11 +321,11 @@
 #pragma mark
 //open up the users table to select users from
 - (void)openUserList{
-    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"built_io_application_user"];
-    usersTable.delegate = self;
-    UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:usersTable];
-    [nc.navigationBar setTintColor:[UIColor darkGrayColor]];
-    [self.navigationController presentViewController:nc animated:YES completion:nil];
+//    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"built_io_application_user"];
+//    usersTable.delegate = self;
+//    UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:usersTable];
+//    [nc.navigationBar setTintColor:[UIColor darkGrayColor]];
+//    [self.navigationController presentViewController:nc animated:YES completion:nil];
 }
 
 #pragma  mark - THContactPickerDelegate

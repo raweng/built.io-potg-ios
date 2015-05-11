@@ -17,6 +17,7 @@
 #define kKeyBoardShowHeight 216
 
 #import <BuiltIO/BuiltIO.h>
+#import <BuiltIO/BuiltIOUIAdditions.h>
 #import "AppConstants.h"
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)

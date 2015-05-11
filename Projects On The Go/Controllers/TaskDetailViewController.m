@@ -259,12 +259,15 @@
     progressHUD.dimBackground = YES;
     [progressHUD setLabelText:@"Deleting Task..."];
     
-    [self.taskObject destroyOnSuccess:^{
-        [progressHUD setLabelText:@"Task Deleted!"];
-        [progressHUD hide:YES afterDelay:2.0];
-    } onError:^(NSError *error) {
-        [progressHUD setLabelText:@"Unable to Delete!"];
-        [progressHUD hide:YES afterDelay:2.0];
+    [self.taskObject destroyInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [progressHUD setLabelText:@"Task Deleted!"];
+            [progressHUD hide:YES afterDelay:2.0];
+        }else {
+            [progressHUD setLabelText:@"Unable to Delete!"];
+            [progressHUD hide:YES afterDelay:2.0];
+        }
     }];
+    
 }
 @end

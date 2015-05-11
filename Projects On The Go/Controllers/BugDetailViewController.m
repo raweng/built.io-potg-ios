@@ -16,6 +16,7 @@
 #import "CommentsViewController.h"
 #import "SVPullToRefresh.h"
 #import "AttachmentViewController.h"
+#import "AppDelegate.h"
 
 const CGFloat kScrollObjHeight	= 64.0;
 const CGFloat kScrollObjWidth	= 52.0;
@@ -246,7 +247,7 @@ const CGFloat kScrollObjWidth	= 52.0;
 }
 
 - (void)loadData:(BuiltObject *)bObject{
-    BuiltUser *user = [BuiltUser currentUser];
+    BuiltUser *user = [[AppDelegate sharedAppDelegate].builtApplication currentUser];
     NSMutableArray *assigneeUIDs = [NSMutableArray array];
     NSMutableArray *assignees = [bObject objectForKey:@"assignees"];
     if (assignees && assignees.count > 0) {
@@ -446,26 +447,29 @@ const CGFloat kScrollObjWidth	= 52.0;
     [bself.commentsTableView addPullToRefreshWithActionHandler:^{
         
         //create a query to fetch comments
-        BuiltQuery *query = [BuiltQuery queryWithClassUID:@"comment"];
+        BuiltClass *commentClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"comment"];
+        BuiltQuery *query = [commentClass query];
         
         //fetch comments for current bug
         [query whereKey:@"for_bug" containedIn:[NSArray arrayWithObjects:bself.builtObject.uid, nil]];
         
         //fire query
-        [query exec:^(QueryResult *result, ResponseType type) {
-            NSMutableArray *results = [NSMutableArray arrayWithArray:[result getResult]];
-            [self.comments removeAllObjects];
-            [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                BuiltObject *object = (BuiltObject *)obj;
-                [self.comments addObject:object];
-            }];
-            self.areCommentsEmpty = self.comments.count > 0 == true ? false : true;
-            [bself.commentsTableView.pullToRefreshView stopAnimating];
-            [self.commentsTableView reloadData];
-            [self prepareViews];
-        } onError:^(NSError *error, ResponseType type) {
-            [bself.commentsTableView.pullToRefreshView stopAnimating];
-            [self prepareViews];
+        [query execInBackground:^(ResponseType type, QueryResult *result, NSError *error) {
+            if (error == nil) {
+                NSMutableArray *results = [NSMutableArray arrayWithArray:[result getResult]];
+                [self.comments removeAllObjects];
+                [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    BuiltObject *object = (BuiltObject *)obj;
+                    [self.comments addObject:object];
+                }];
+                self.areCommentsEmpty = self.comments.count > 0 == true ? false : true;
+                [bself.commentsTableView.pullToRefreshView stopAnimating];
+                [self.commentsTableView reloadData];
+                [self prepareViews];
+            }else {
+                [bself.commentsTableView.pullToRefreshView stopAnimating];
+                [self prepareViews];
+            }
         }];
     }];
 }
@@ -505,14 +509,16 @@ const CGFloat kScrollObjWidth	= 52.0;
     progressHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progressHUD.dimBackground = YES;
     [progressHUD setLabelText:@"Deleting Bug..."];
-    [self.builtObject destroyOnSuccess:^{
-        [progressHUD setLabelText:@"Bug Deleted!"];
-        [progressHUD hide:YES afterDelay:2.0];
-        [self performSelector:@selector(dismissAfterCreating) withObject:nil afterDelay:1.0];
-    } onError:^(NSError *error) {
-        NSLog(@"error %@",error.userInfo);
-        [progressHUD setLabelText:@"Deletion Failed!"];
-        [progressHUD hide:YES afterDelay:2.0];
+    [self.builtObject destroyInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [progressHUD setLabelText:@"Bug Deleted!"];
+            [progressHUD hide:YES afterDelay:2.0];
+            [self performSelector:@selector(dismissAfterCreating) withObject:nil afterDelay:1.0];
+        }else {
+            NSLog(@"error %@",error.userInfo);
+            [progressHUD setLabelText:@"Deletion Failed!"];
+            [progressHUD hide:YES afterDelay:2.0];
+        }
     }];
 }
 

@@ -29,7 +29,6 @@
     self = [super initWithStyle:style];
     if (self) {
         self.title = @"Projects";
-        self.enablePullToRefresh = YES;
         self.fetchLimit = 10;
     }
     return self;

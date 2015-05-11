@@ -66,7 +66,8 @@
     [bself.milestoneTableView addPullToRefreshWithActionHandler:^{
         
         //create a query to fetch bugs
-        BuiltQuery *query = [BuiltQuery queryWithClassUID:@"milestone"];
+        BuiltClass *milestoneClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"milestone"];
+        BuiltQuery *query = [milestoneClass query];
         
         //fetch milestones for current project
         [query whereKey:@"project" containedIn:[NSArray arrayWithObject:self.builtObject.uid]];
@@ -75,17 +76,20 @@
         [query includeRefFieldWithKey:[NSArray arrayWithObject:@"assignees"]];
         
         //fire the query
-        [query exec:^(QueryResult *result, ResponseType type) {
-            [bself.milestones removeAllObjects];
-            NSMutableArray *milestone = [result getResult];
-            [milestone enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                BuiltObject *object = (BuiltObject *)obj;
-                [bself.milestones addObject:object];
-            }];
-            [bself.milestoneTableView.pullToRefreshView stopAnimating];
-            [bself.milestoneTableView reloadData];
-        } onError:^(NSError *error, ResponseType type) {
-            [bself.milestoneTableView.pullToRefreshView stopAnimating];
+        
+        [query execInBackground:^(ResponseType type, QueryResult *result, NSError *error) {
+            if (error == nil) {
+                [bself.milestones removeAllObjects];
+                NSArray *milestone = [result getResult];
+                [milestone enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    BuiltObject *object = (BuiltObject *)obj;
+                    [bself.milestones addObject:object];
+                }];
+                [bself.milestoneTableView.pullToRefreshView stopAnimating];
+                [bself.milestoneTableView reloadData];
+            }else {
+                [bself.milestoneTableView.pullToRefreshView stopAnimating];
+            }
         }];
     }];
 }

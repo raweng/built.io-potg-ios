@@ -12,6 +12,8 @@
 #import "THContactPickerView.h"
 #import "UsersTableViewController.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
+#import "AppConstants.h"
 
 #define kSupviewGap 5.0f
 #define ASSIGNEE_TEXTVIEW_TAG 99
@@ -219,7 +221,8 @@ CGFloat topCoordinate;
 
 -(void) doneButtonClick {
     //create a task object
-    BuiltObject *task = [BuiltObject objectWithClassUID:CLASSUID_TASKS];
+    BuiltClass *taskClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:CLASSUID_TASKS];
+    BuiltObject *task = [taskClass object];
     NSMutableArray *taskSteps;
     if (self.stepsArray.count > 0) {
         taskSteps = [NSMutableArray array];
@@ -244,7 +247,7 @@ CGFloat topCoordinate;
            [task setReference:[user uid] forKey:@"assignees"];
     }];
     
-    BuiltACL *taskACL = [BuiltACL ACL];
+    BuiltACL *taskACL = [[AppDelegate sharedAppDelegate].builtApplication acl];
     
     //members have read access for a task
     [[self.project objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -271,14 +274,18 @@ CGFloat topCoordinate;
     [creatingTaskHUD setLabelText:@"Creating task..."];
     
     //save the task object
-    [task saveOnSuccess:^{
-        [creatingTaskHUD setLabelText:@"Task Created!"];
-        [creatingTaskHUD hide:YES afterDelay:0.5];
-        [self performSelector:@selector(dismissAfterCreating) withObject:nil afterDelay:1.0];
-    } onError:^(NSError *error) {
-        [creatingTaskHUD setLabelText:@"Error Creating Task!"];
-        [creatingTaskHUD hide:YES afterDelay:0.5];
+    
+    [task saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [creatingTaskHUD setLabelText:@"Task Created!"];
+            [creatingTaskHUD hide:YES afterDelay:0.5];
+            [self performSelector:@selector(dismissAfterCreating) withObject:nil afterDelay:1.0];
+        }else {
+            [creatingTaskHUD setLabelText:@"Error Creating Task!"];
+            [creatingTaskHUD hide:YES afterDelay:0.5];
+        }
     }];
+    
 }
 
 - (void)addStepView:(id)sender{
@@ -419,7 +426,7 @@ CGFloat topCoordinate;
 
 //open up the users table to select users from
 - (void)openUserList{
-    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"built_io_application_user"];
+    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withBuiltClass:[[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user"]];
     [usersTable setDelegate:self];
     UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:usersTable];
     [nc.navigationBar setTintColor:[UIColor darkGrayColor]];

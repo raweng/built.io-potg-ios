@@ -13,6 +13,7 @@
 #import "UsersTableViewController.h"
 #import "AppUtils.h"
 #import "NSDate+Addition.h"
+#import "AppDelegate.h"
 
 #define ASSIGNEE_TEXTVIEW 999
 #define ASSIGNEE_PICKER 500
@@ -211,15 +212,18 @@
     [object setObject:self.reprodubleButton.titleLabel.text forKey:@"reproducible"];
     [object setObject:self.bugDate forKey:@"due_date"];
     
-    [object saveOnSuccess:^{
-        [creatingBugHUD setLabelText:@"Bug Updated Successfully!"];
-        [creatingBugHUD hide:YES afterDelay:0.5];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } onError:^(NSError *error) {
-        [creatingBugHUD setLabelText:@"Error Updating Bug!"];
-        [creatingBugHUD hide:YES afterDelay:0.5];
-        [self dismissViewControllerAnimated:YES completion:nil];
+    [object saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [creatingBugHUD setLabelText:@"Bug Updated Successfully!"];
+            [creatingBugHUD hide:YES afterDelay:0.5];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }else {
+            [creatingBugHUD setLabelText:@"Error Updating Bug!"];
+            [creatingBugHUD hide:YES afterDelay:0.5];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -421,7 +425,7 @@
 #pragma mark
 //open up the users table to select users from
 - (void)openUserList{
-    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"built_io_application_user"];
+    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withBuiltClass:[[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user"]];
     [usersTable setTitle:@"Add Assignees"];
     usersTable.delegate = self;
     UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:usersTable];

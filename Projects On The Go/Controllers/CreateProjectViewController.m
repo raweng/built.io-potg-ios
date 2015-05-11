@@ -13,6 +13,7 @@
 #import "THContactPickerView.h"
 #import "UsersTableViewController.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
 @interface CreateProjectViewController ()<THContactPickerDelegate, UITextViewDelegate, UserTableViewDelegate>
 
@@ -97,15 +98,18 @@
         [membersUIDs addObject:[user uid]];
     }];
     
-    BuiltObject *modRole = [BuiltObject objectWithClassUID:@"built_io_application_user_role"];
+    BuiltClass *modClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user_role"];
+    BuiltObject *modRole = [modClass object];
     [modRole setObject:[NSString stringWithFormat:@"%@_moderators",self.title] forKey:@"name"];
     [modRole setObject:moderatorsUIDs forKey:@"users"];
     
-    BuiltObject *membersRole = [BuiltObject objectWithClassUID:@"built_io_application_user_role"];
+    BuiltObject *membersRole = [modClass object];
     [membersRole setObject:[NSString stringWithFormat:@"%@_members",self.title] forKey:@"name"];
     [membersRole setObject:membersUIDs forKey:@"users"];
     
-    BuiltObject *newProject = [BuiltObject objectWithClassUID:@"project"];
+    BuiltClass *projectClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"project"];
+
+    BuiltObject *newProject = [projectClass object];
     [newProject setObject:self.title forKey:@"name"];
     [newProject setObject:self.descriptionTextView.text forKey:@"description"];
     [newProject setReference:modRole forKey:@"moderators"];
@@ -114,51 +118,53 @@
     MBProgressHUD *creatingProjectHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [creatingProjectHUD setLabelText:@"Creating Project..."];
     
-    [newProject saveOnSuccess:^{
-        [creatingProjectHUD setLabelText:@"Project Created!"];
-        [creatingProjectHUD hide:YES afterDelay:0.5];
-        
-        //moderator(s) should have read,update rights for project
-        BuiltACL *projectACL = [BuiltACL ACL];
-        
-        [[newProject objectForKey:@"moderators"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [projectACL setRoleReadAccess:YES forRoleUID:obj];
-            [projectACL setRoleWriteAccess:YES forRoleUID:obj];
-        }];
-        //member(s) should have read right for project
-        [[newProject objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [projectACL setRoleReadAccess:YES forRoleUID:obj];
-        }];
-
-        [newProject setACL:projectACL];
-        
-        [newProject saveOnSuccess:^{
-
-        } onError:^(NSError *error) {
-
-        }];
-        
-        //update member role ACL with update permission for moderators role
-        [[newProject objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            BuiltObject *memberRole = [BuiltObject objectWithClassUID:@"built_io_application_user_role"];
-            [memberRole setUid:obj];
+    
+    [newProject saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [creatingProjectHUD setLabelText:@"Project Created!"];
+            [creatingProjectHUD hide:YES afterDelay:0.5];
+            
+            //moderator(s) should have read,update rights for project
+            BuiltACL *projectACL = [[AppDelegate sharedAppDelegate].builtApplication acl];
+            
             [[newProject objectForKey:@"moderators"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                [memberRole setObject:@{@"roles": @[@{@"update": @"true",@"read": @"true",@"uid": obj}]}
-                               forKey:@"ACL"];
+                [projectACL setRoleReadAccess:YES forRoleUID:obj];
+                [projectACL setRoleWriteAccess:YES forRoleUID:obj];
             }];
-            [memberRole saveOnSuccess:^{
-
-            } onError:^(NSError *error) {
-
+            //member(s) should have read right for project
+            [[newProject objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [projectACL setRoleReadAccess:YES forRoleUID:obj];
             }];
-        }];
-        
-        [self performSelector:@selector(dismissAfterCreating) withObject:nil afterDelay:1.0];
+            
+            [newProject setACL:projectACL];
+            
+            [newProject saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+                //
+            }];
+            
+            //update member role ACL with update permission for moderators role
+            [[newProject objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                BuiltClass *memberRoleClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user_role"];
 
-    } onError:^(NSError *error) {
-        [creatingProjectHUD setLabelText:@"Error Creating Project!"];
-        [creatingProjectHUD hide:YES afterDelay:0.5];
+                BuiltObject *memberRole = [memberRoleClass object];
+                [memberRole setUid:obj];
+                [[newProject objectForKey:@"moderators"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    [memberRole setObject:@{@"roles": @[@{@"update": @"true",@"read": @"true",@"uid": obj}]}
+                                   forKey:@"ACL"];
+                }];
+                [memberRole saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+                    //
+                }];
+                
+            }];
+            
+            [self performSelector:@selector(dismissAfterCreating) withObject:nil afterDelay:1.0];
+        }else {
+            [creatingProjectHUD setLabelText:@"Error Creating Project!"];
+            [creatingProjectHUD hide:YES afterDelay:0.5];
+        }
     }];
+    
 }
 
 - (void)dismissAfterCreating{
@@ -254,7 +260,7 @@
 
 //open up the users table to select users from
 - (void)openUserList{
-    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"built_io_application_user"];
+    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withBuiltClass:[[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user"]];
     [usersTable setDelegate:self];
     UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:usersTable];
     [nc.navigationBar setTintColor:[UIColor darkGrayColor]];

@@ -13,6 +13,8 @@
 #import "FilesViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "AppDelegate.h"
+#import "AppConstants.h"
 
 #define MODERATOR_TEXTVIEW_TAG 1
 #define BUG_TITLE_TAG 2
@@ -51,7 +53,7 @@
 @property (nonatomic, strong) UIActionSheet *pickImageActionSheet;
 @property (nonatomic, strong) UIImagePickerController *picker;
 
-@property (nonatomic, strong) BuiltFile *file;
+@property (nonatomic, strong) BuiltUpload *file;
 @property (nonatomic, assign) BOOL isFileUpload;
 @end
 
@@ -133,7 +135,7 @@
 {
     [super viewDidLoad];
     
-    self.file = [BuiltFile file];
+    self.file = [[AppDelegate sharedAppDelegate].builtApplication upload];
     self.isFileUpload = NO;
     
     self.bugTitle.tag = BUG_TITLE_TAG;
@@ -226,7 +228,7 @@
 #pragma mark Button Clicks
 -(void) doneButtonClick {
     //create bug object
-    BuiltObject *bug = [BuiltObject objectWithClassUID:CLASSUID_BUGS];
+    BuiltObject *bug = [[[AppDelegate sharedAppDelegate].builtApplication classWithUID:CLASSUID_BUGS] object];
     
     creatingBugHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [creatingBugHUD setLabelText:@"Creating Bug..."];
@@ -240,18 +242,20 @@
 //            
 //            [self.file addFile:fileObject forKey:[self.imagesNameList objectAtIndex:idx]];
             
-            BuiltFile *image = [BuiltFile file];
+            BuiltUpload *image = [[AppDelegate sharedAppDelegate].builtApplication upload];
             [image setImage:obj forKey:[self.imagesNameList objectAtIndex:idx]];
-            [image saveOnSuccess:^{
-                [UIDs addObject:image.uid];
-                if (idx == (self.imageAttachments.count - 1)) {
-                    if (UIDs.count > 0) {
-                        [bug setObject:UIDs forKey:@"attachments"];
+            [image saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+                if (error == nil) {
+                    [UIDs addObject:image.uid];
+                    if (idx == (self.imageAttachments.count - 1)) {
+                        if (UIDs.count > 0) {
+                            [bug setObject:UIDs forKey:@"attachments"];
+                        }
+                        [self createObject:bug];
                     }
+                }else {
                     [self createObject:bug];
                 }
-            } onError:^(NSError *error) {
-                [self createObject:bug];
             }];
         }];
         
@@ -302,7 +306,7 @@
         Always make sure that we set proper ACL's when creating objects.
      */
     
-    BuiltACL *bugACL = [BuiltACL ACL];
+    BuiltACL *bugACL = [[AppDelegate sharedAppDelegate].builtApplication acl];
     
     //members have read access for a bug
     [[self.project objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -327,16 +331,20 @@
     [bug setACL:bugACL];
     
     //save bug
-    [bug saveOnSuccess:^{
-        [creatingBugHUD setLabelText:@"Bug Created!"];
-        [creatingBugHUD hide:YES afterDelay:0.5];
-        [self dismissViewControllerAnimated:YES completion:nil];
-        [self.imagesNameList removeAllObjects];
-        [self.imageAttachments removeAllObjects];
-    } onError:^(NSError *error) {
-        [creatingBugHUD setLabelText:@"Error Creating Bug!"];
-        [creatingBugHUD hide:YES afterDelay:0.5];
+    
+    [bug saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [creatingBugHUD setLabelText:@"Bug Created!"];
+            [creatingBugHUD hide:YES afterDelay:0.5];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.imagesNameList removeAllObjects];
+            [self.imageAttachments removeAllObjects];
+        }else {
+            [creatingBugHUD setLabelText:@"Error Creating Bug!"];
+            [creatingBugHUD hide:YES afterDelay:0.5];
+        }
     }];
+    
 }
 
 - (void)dismissSelf{
@@ -546,7 +554,7 @@
 #pragma mark
 //open up the users table to select users from
 - (void)openUserList{
-    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"built_io_application_user"];
+    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withBuiltClass:[[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user"]];
     usersTable.delegate = self;
     UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:usersTable];
     [nc.navigationBar setTintColor:[UIColor darkGrayColor]];

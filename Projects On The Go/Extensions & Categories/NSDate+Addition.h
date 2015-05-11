@@ -1,6 +1,5 @@
 //
 //  NSDate+Addition.h
-//  tibbr4
 //
 //  Created by Reefaq on 31/08/12.
 //  Copyright (c) 2012 raweng. All rights reserved.

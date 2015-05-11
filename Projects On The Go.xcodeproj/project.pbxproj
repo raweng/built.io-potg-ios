@@ -10,6 +10,11 @@
 		23323C2E1A1E395900BC79AC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 23323C2B1A1E395900BC79AC /* MBProgressHUD.m */; };
 		23323C321A1E3AA700BC79AC /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23323C301A1E3AA700BC79AC /* BuiltIO.bundle */; };
 		23323C341A1E3BAA00BC79AC /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23323C311A1E3AA700BC79AC /* BuiltIO.framework */; };
+		2340F9371AD6A23400597EC1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2340F9361AD6A23400597EC1 /* CoreData.framework */; };
+		2340F9391AD6A23B00597EC1 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2340F9381AD6A23B00597EC1 /* libicucore.dylib */; };
+		2340F93B1AD6A24000597EC1 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2340F93A1AD6A24000597EC1 /* libsqlite3.dylib */; };
+		23879F491ADE5FBD00A2F831 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 37BEF2DF1779E18000D7A040 /* UIScrollView+SVInfiniteScrolling.m */; };
+		23879F4A1ADE5FBD00A2F831 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 37BEF2E11779E18000D7A040 /* UIScrollView+SVPullToRefresh.m */; };
 		370142451771F75400A885E4 /* BugDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 370142441771F75400A885E4 /* BugDetailViewController.m */; };
 		373BC7D21772C52700F6F581 /* CreateBugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 373BC7D01772C52700F6F581 /* CreateBugViewController.m */; };
 		373BC7D31772C52700F6F581 /* CreateBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 373BC7D11772C52700F6F581 /* CreateBugViewController.xib */; };
@@ -124,6 +129,9 @@
 		23323C2B1A1E395900BC79AC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		23323C301A1E3AA700BC79AC /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BuiltIO.bundle; sourceTree = "<group>"; };
 		23323C311A1E3AA700BC79AC /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuiltIO.framework; sourceTree = "<group>"; };
+		2340F9361AD6A23400597EC1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		2340F9381AD6A23B00597EC1 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		2340F93A1AD6A24000597EC1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		370142431771F75400A885E4 /* BugDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugDetailViewController.h; sourceTree = "<group>"; };
 		370142441771F75400A885E4 /* BugDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugDetailViewController.m; sourceTree = "<group>"; };
 		373BC7CF1772C52700F6F581 /* CreateBugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBugViewController.h; sourceTree = "<group>"; };
@@ -285,6 +293,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2340F93B1AD6A24000597EC1 /* libsqlite3.dylib in Frameworks */,
+				2340F9391AD6A23B00597EC1 /* libicucore.dylib in Frameworks */,
+				2340F9371AD6A23400597EC1 /* CoreData.framework in Frameworks */,
 				BA1FC7B317B39C6B0011E5B1 /* Social.framework in Frameworks */,
 				BA1FC7B117B39C670011E5B1 /* Accounts.framework in Frameworks */,
 				BA1FC7AF17B39C620011E5B1 /* Twitter.framework in Frameworks */,
@@ -530,6 +541,9 @@
 		BAAB6E25176F223F007A2B1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2340F93A1AD6A24000597EC1 /* libsqlite3.dylib */,
+				2340F9381AD6A23B00597EC1 /* libicucore.dylib */,
+				2340F9361AD6A23400597EC1 /* CoreData.framework */,
 				BA1FC7B217B39C6B0011E5B1 /* Social.framework */,
 				BA1FC7B017B39C670011E5B1 /* Accounts.framework */,
 				BA1FC7AE17B39C620011E5B1 /* Twitter.framework */,
@@ -715,10 +729,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23879F4A1ADE5FBD00A2F831 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				BAAB6E33176F223F007A2B1C /* main.m in Sources */,
 				BAAB6E37176F223F007A2B1C /* AppDelegate.m in Sources */,
 				3766BF5A176F36090082D038 /* UINavigationItem+JTRevealSidebarV2.m in Sources */,
 				3766BF5B176F36090082D038 /* UIViewController+JTRevealSidebarV2.m in Sources */,
+				23879F491ADE5FBD00A2F831 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				3766BF5E176F37960082D038 /* ViewController.m in Sources */,
 				3766BF61176F37F70082D038 /* SidebarViewController.m in Sources */,
 				3766BF69176F598C0082D038 /* ProjectViewController.m in Sources */,

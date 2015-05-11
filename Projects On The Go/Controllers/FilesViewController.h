@@ -1,6 +1,5 @@
 //
 //  FilesViewController.h
-//  tibbr
 //
 //  Created by Reefaq on 14/10/12.
 //  Copyright (c) 2012 Reefaq. All rights reserved.

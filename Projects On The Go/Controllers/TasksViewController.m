@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "SVPullToRefresh.h"
 #import "TaskDetailViewController.h"
+#import "AppDelegate.h"
 
 @interface TasksViewController (){
     MBProgressHUD *progressHUD;
@@ -65,31 +66,36 @@
         [progressHUD setLabelText:@"Loading Tasks List..."];
         
         //form a query for retrieveing tasks
-        BuiltQuery *query = [BuiltQuery queryWithClassUID:@"task"];
+        BuiltClass *taskClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"task"];
+        BuiltQuery *query = [taskClass query];
         
         //fetch tasks for current project
         [query whereKey:@"project" containedIn:[NSArray arrayWithObject:self.builtObject.uid]];
         
         //fire the query
-        [query exec:^(QueryResult *result, ResponseType type) {
-            [bself.tasksArray removeAllObjects];
-            NSMutableArray *tasks = [result getResult];
-            [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                BuiltObject *object = (BuiltObject *)obj;
-                [self.tasksArray addObject:object];
-            }];
-            if (self.tasksArray.count > 0) {
-                [self.tasksTableView reloadData];
-            }else{
-                [self.tasksTableView setHidden:YES];
-                [self noTasksViewLayout];
+        
+        [query execInBackground:^(ResponseType type, QueryResult *result, NSError *error) {
+            if (error == nil) {
+                [bself.tasksArray removeAllObjects];
+                NSArray *tasks = [result getResult];
+                [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    BuiltObject *object = (BuiltObject *)obj;
+                    [self.tasksArray addObject:object];
+                }];
+                if (self.tasksArray.count > 0) {
+                    [self.tasksTableView reloadData];
+                }else{
+                    [self.tasksTableView setHidden:YES];
+                    [self noTasksViewLayout];
+                }
+                [bself.tasksTableView.pullToRefreshView stopAnimating];
+                [MBProgressHUD hideHUDForView:self.view animated:NO];
+            }else {
+                [bself.tasksTableView.pullToRefreshView stopAnimating];
+                [MBProgressHUD hideHUDForView:self.view animated:NO];
             }
-            [bself.tasksTableView.pullToRefreshView stopAnimating];
-            [MBProgressHUD hideHUDForView:self.view animated:NO];
-        } onError:^(NSError *error, ResponseType type) {
-            [bself.tasksTableView.pullToRefreshView stopAnimating];
-            [MBProgressHUD hideHUDForView:self.view animated:NO];
         }];
+        
     }];
 }
 

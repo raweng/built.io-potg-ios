@@ -11,6 +11,8 @@
 #import "MBProgressHUD.h"
 #import "THContactPickerView.h"
 #import "UsersTableViewController.h"
+#import "AppDelegate.h"
+#import "AppConstants.h"
 
 #define MODERATOR_TEXTVIEW_TAG 1
 #define BUG_TITLE_TAG 2
@@ -121,7 +123,10 @@
     if (self.startDate != nil && self.endDate != nil) {
         
         //create a milestone object
-        BuiltObject *milestone = [BuiltObject objectWithClassUID:CLASSUID_MILESTONES];
+        
+        BuiltClass *milestoneClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:CLASSUID_MILESTONES];
+        
+        BuiltObject *milestone = [milestoneClass object];
         [milestone setObject:self.milestoneName.text forKey:@"name"];
         [milestone setObject:self.descriptionText.text forKey:@"description"];
         [milestone setObject:self.startDate forKey:@"start_date"];
@@ -139,7 +144,7 @@
         }
         
         
-        BuiltACL *milestoneACL = [BuiltACL ACL];
+        BuiltACL *milestoneACL = [[AppDelegate sharedAppDelegate].builtApplication acl];
         
         //members have read access for a milestone
         [[self.project objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -160,13 +165,16 @@
         [creatingMilestoneHUD setLabelText:@"Creating Milestone..."];
         
         //save milestone object
-        [milestone saveOnSuccess:^{
-            [creatingMilestoneHUD setLabelText:@"Milestone Created!"];
-            [creatingMilestoneHUD hide:YES afterDelay:0.5];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } onError:^(NSError *error) {
-            [creatingMilestoneHUD setLabelText:@"Error Creating Milestone!"];
-            [creatingMilestoneHUD hide:YES afterDelay:0.5];
+        
+        [milestone saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+            if (error == nil) {
+                [creatingMilestoneHUD setLabelText:@"Milestone Created!"];
+                [creatingMilestoneHUD hide:YES afterDelay:0.5];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }else {
+                [creatingMilestoneHUD setLabelText:@"Error Creating Milestone!"];
+                [creatingMilestoneHUD hide:YES afterDelay:0.5];
+            }
         }];
     }
 }
@@ -224,7 +232,7 @@
 #pragma mark
 //open up the users table to select users from
 - (void)openUserList{
-    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"built_io_application_user"];
+    UsersTableViewController *usersTable = [[UsersTableViewController alloc]initWithStyle:UITableViewStylePlain withBuiltClass:[[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user"]];
     usersTable.delegate = self;
     UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:usersTable];
     [nc.navigationBar setTintColor:[UIColor darkGrayColor]];

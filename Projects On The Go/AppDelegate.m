@@ -20,20 +20,16 @@
 #import "ProjectViewController.h"
 
 @interface AppDelegate ()<BuiltUIGoogleAppSettingDelegate, BuiltUILoginDelegate, BuiltUITwitterAppSettingDelegate>
-//@property (nonatomic, strong)UINavigationController *nvc;
-@end
 
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // ----------------------------------------------------------------------------
     // Built initialization
-    // [Built initializeWithApiKey:@"APPLICATION_API_KEY" andUid:@"APPLICATION_UID"];
-    // ----------------------------------------------------------------------------
-    
-    [Built initializeWithApiKey:@"api_key_here" andUid:@"app_uid_here"];
+   #error Enter Built.io application APIKEY
+   self.builtApplication = [Built applicationWithAPIKey:@"APIKEY"];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -41,14 +37,15 @@
 
     // ----------------------------------------------------------------------------
     // Get BuiltUser Object and check whether user is logged in.
-    // [BuiltUser currentUser] returns nil if user is not logged in and called saveUserSession on BuiltUser Object.
     // If User is not logged in take to BuiltUILoginController otherwise load any other ViewController
     // ----------------------------------------------------------------------------
-    BuiltUser *user = [BuiltUser currentUser];
+    BuiltUser *user = [self.builtApplication currentUser];
+    
     if (user) {
         [self checkForUserRightsAndLoadProjects];
     }else{//if there is no user logged in present the login controller
         BuiltUILoginController *login = [[BuiltUILoginController alloc]initWithNibName:nil bundle:nil];
+        login.builtApplication =self.builtApplication;
         
         //set the login delegate to be notified when user logs in
         [login setDelegate:self];
@@ -84,11 +81,13 @@
 #pragma mark GoogleAppSettingDelegate 
 
 - (NSString*)googleAppClientID {
-    return @"client_id_here";
+    #warning enter client id
+    return @"google_client_id_here";
 }
 
 - (NSString*)googleAppClientSecret {
-    return @"secret_here";
+    #warning enter client secret
+    return @"google_secret_here";
 }
 
 
@@ -96,10 +95,12 @@
 #pragma mark TwitterAppSettingDelegate
 
 -(NSString *)consumerKey{
+    #warning enter consumer key
     return @"twitter_consumer_key_here";
 }
 
 -(NSString *)consumerSecret{
+    #warning enter consumer secret
     return @"twitter_consumer_secret_here";
 }
 
@@ -109,29 +110,31 @@
 
 -(void)loginSuccessWithUser:(BuiltUser *)user{
     //save the user session
-    [user saveSession];
+    [user setAsCurrentUser];
     [self checkForUserRightsAndLoadProjects];
 }
 
 /*
-    Fetch Roles and from Application Role class.
-    From the fetched roles get role named 'admin'
+    Fetch Roles and get role named 'admin'
  */
 - (void)checkForUserRightsAndLoadProjects{
-    BuiltQuery *rolesQuery = [BuiltRole getRolesQuery];
+    BuiltQuery *rolesQuery = [[self.builtApplication roleWithName:@"admin"] query];
     [rolesQuery whereKey:@"name" equalTo:@"admin"];
     
-    [rolesQuery exec:^(QueryResult *result, ResponseType type) {
-        if ([result getRoles] && [result getRoles].count) {
-            if([[[result getRoles] objectAtIndex:0] hasUser:[[BuiltUser currentUser] uid]]){
-                [self loadProjects:YES];
-            }else{
-                [self loadProjects:NO];
+    [rolesQuery execInBackground:^(ResponseType type, QueryResult *result, NSError *error) {
+        if (error == nil) {
+            if ([result getRoles] && [result getRoles].count) {
+                if([[[result getRoles] objectAtIndex:0] hasUser:[[self.builtApplication currentUser] uid]]){
+                    [self loadProjects:YES];
+                }else{
+                    [self loadProjects:NO];
+                }
             }
+        }else {
+            //error info
         }
-    } onError:^(NSError *error, ResponseType type) {
-        //handle errors here
     }];
+
 }
 
 -(void)loginFailedWithError:(NSError *)error{
@@ -141,11 +144,11 @@
 /*
     Load Projects from 'project' class.
     ProjectViewController extends built.io's class BuiltUITableViewController.
-    Provide class uid of class whose object need to be displayed in UITableView.
+    Provide class uid of class whose object need to be displayed.
     BuiltUITableViewController has in-built BuiltQuery object. One can fire methods on BuiltQuery to get filtered/sorted the BuiltQuery results.
  */
 - (void)loadProjects:(BOOL)isAdmin{
-    ProjectViewController *project = [[ProjectViewController alloc] initWithStyle:UITableViewStylePlain withClassUID:@"project"];
+    ProjectViewController *project = [[ProjectViewController alloc] initWithStyle:UITableViewStylePlain withBuiltClass:[self.builtApplication classWithUID:@"project"]];
     project.isAdmin = isAdmin;
     self.nc = [[UINavigationController alloc]initWithRootViewController:project];
     [self.nc.navigationBar setTintColor:[UIColor darkGrayColor]];

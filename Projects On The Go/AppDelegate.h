@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) UINavigationController *nc;
 
+@property (strong, nonatomic) BuiltApplication * builtApplication;
+
 +(AppDelegate *)sharedAppDelegate;
 
 @end

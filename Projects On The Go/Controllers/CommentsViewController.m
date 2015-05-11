@@ -8,6 +8,7 @@
 
 #import "CommentsViewController.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
 @interface CommentsViewController (){
     MBProgressHUD *progressHUD;
@@ -121,7 +122,8 @@
     [progressHUD setLabelText:@"Adding Comment"];
         
     //create a comment object and set the values for fields
-    BuiltObject *object = [BuiltObject objectWithClassUID:@"comment"];
+    BuiltClass *commentClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"content"];
+    BuiltObject *object = [commentClass object];
     [object setObject:self.commentsTextView.text forKey:@"content"];
     
     //set the bug object's uid for the reference field for_bug
@@ -131,14 +133,16 @@
     [object setReference:self.project.uid forKey:@"project"];
     
     //save the comment object
-    [object saveOnSuccess:^{
-        [progressHUD setLabelText:@"Success!!"];
-        [progressHUD hide:YES afterDelay:3.0];
-        [self.delegate commentDone];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } onError:^(NSError *error) {
-        [progressHUD setLabelText:@"Failure!!"];
-        [progressHUD hide:YES afterDelay:3.0];
+    [object saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error == nil) {
+            [progressHUD setLabelText:@"Success!!"];
+            [progressHUD hide:YES afterDelay:3.0];
+            [self.delegate commentDone];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }else {
+            [progressHUD setLabelText:@"Failure!!"];
+            [progressHUD hide:YES afterDelay:3.0];
+        }
     }];
 }
 

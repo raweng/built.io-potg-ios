@@ -13,15 +13,6 @@
 @implementation SidebarViewController
 @synthesize sidebarDelegate,sideBarMenuItems;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (id)initWithProject:(NSMutableArray *)menu{
     self = [super init];
     if (self) {
@@ -32,13 +23,6 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-//    self.sideBarMenuItems = [NSMutableArray array];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
@@ -46,13 +30,6 @@
         NSIndexPath *indexPath = [self.sidebarDelegate lastSelectedIndexPathForSidebarViewController:self];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 #pragma mark - Table view data source
@@ -83,16 +60,6 @@
         cell.textLabel.text = [self.sideBarMenuItems objectAtIndex:indexPath.row];
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
-//    if (indexPath.row == 0) {
-//        cell.textLabel.text = @"Organization Name";
-//        cell.imageView.image = [UIImage imageNamed:@"ButtonMenu"];
-//    }else if (indexPath.row == 1){
-//        cell.textLabel.text = MY_TASKS;
-//    }else if (indexPath.row == 2){
-//        cell.textLabel.text = MY_BUGS;
-//    }else if (indexPath.row == 3){
-//        cell.textLabel.text = MY_MILESTONE;
-//    }
     
     return cell;
 }

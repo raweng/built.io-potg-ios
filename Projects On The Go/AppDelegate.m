@@ -118,7 +118,8 @@
     Fetch Roles and get role named 'admin'
  */
 - (void)checkForUserRightsAndLoadProjects{
-    BuiltQuery *rolesQuery = [[self.builtApplication roleWithName:@"admin"] query];
+    BuiltRole *adminRole = [self.builtApplication roleWithName:@"admin"];
+    BuiltQuery *rolesQuery = [adminRole query];
     [rolesQuery whereKey:@"name" equalTo:@"admin"];
     
     [rolesQuery execInBackground:^(ResponseType type, QueryResult *result, NSError *error) {
@@ -130,8 +131,6 @@
                     [self loadProjects:NO];
                 }
             }
-        }else {
-            //error info
         }
     }];
 
@@ -150,6 +149,8 @@
 - (void)loadProjects:(BOOL)isAdmin{
     ProjectViewController *project = [[ProjectViewController alloc] initWithStyle:UITableViewStylePlain withBuiltClass:[self.builtApplication classWithUID:@"project"]];
     project.isAdmin = isAdmin;
+    project.fetchLimit = 10;
+
     self.nc = [[UINavigationController alloc]initWithRootViewController:project];
     [self.nc.navigationBar setTintColor:[UIColor darkGrayColor]];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {

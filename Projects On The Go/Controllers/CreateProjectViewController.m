@@ -98,13 +98,10 @@
         [membersUIDs addObject:[user uid]];
     }];
     
-    BuiltClass *modClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user_role"];
-    BuiltObject *modRole = [modClass object];
-    [modRole setObject:[NSString stringWithFormat:@"%@_moderators",self.title] forKey:@"name"];
-    [modRole setObject:moderatorsUIDs forKey:@"users"];
+    BuiltRole *moderatorsRole = [[AppDelegate sharedAppDelegate].builtApplication roleWithName:[NSString stringWithFormat:@"%@_moderators",self.title]];
+    [moderatorsRole setObject:moderatorsUIDs forKey:@"users"];
     
-    BuiltObject *membersRole = [modClass object];
-    [membersRole setObject:[NSString stringWithFormat:@"%@_members",self.title] forKey:@"name"];
+    BuiltRole *membersRole = [[AppDelegate sharedAppDelegate].builtApplication roleWithName:[NSString stringWithFormat:@"%@_members",self.title]];
     [membersRole setObject:membersUIDs forKey:@"users"];
     
     BuiltClass *projectClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"project"];
@@ -112,7 +109,7 @@
     BuiltObject *newProject = [projectClass object];
     [newProject setObject:self.title forKey:@"name"];
     [newProject setObject:self.descriptionTextView.text forKey:@"description"];
-    [newProject setReference:modRole forKey:@"moderators"];
+    [newProject setReference:moderatorsRole forKey:@"moderators"];
     [newProject setReference:membersRole forKey:@"members"];
     
     MBProgressHUD *creatingProjectHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -144,10 +141,8 @@
             
             //update member role ACL with update permission for moderators role
             [[newProject objectForKey:@"members"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                BuiltClass *memberRoleClass = [[AppDelegate sharedAppDelegate].builtApplication classWithUID:@"built_io_application_user_role"];
-
-                BuiltObject *memberRole = [memberRoleClass object];
-                [memberRole setUid:obj];
+                
+                BuiltRole *memberRole = [[AppDelegate sharedAppDelegate].builtApplication roleWithUID:obj];
                 [[newProject objectForKey:@"moderators"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     [memberRole setObject:@{@"roles": @[@{@"update": @"true",@"read": @"true",@"uid": obj}]}
                                    forKey:@"ACL"];

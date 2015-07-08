@@ -25,18 +25,11 @@
 
 @implementation ProjectViewController
 
--(id)initWithStyle:(UITableViewStyle)style{
-    self = [super initWithStyle:style];
-    if (self) {
-        self.title = @"Projects";
-        self.fetchLimit = 10;
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Projects";
+
     [self refresh];
     [self.navigationController setNavigationBarHidden:NO];
 
